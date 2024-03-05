@@ -38,7 +38,7 @@ export function Marketplace() {
               </Link>
               <img
                 alt="Artwork"
-                className="aspect-video object-cover rounded-t-lg"
+                className=" object-cover rounded-t-lg"
                 height={200}
                 src="/placeholder.svg"
                 width={300}
@@ -58,7 +58,7 @@ export function Marketplace() {
               </Link>
               <img
                 alt="Artwork"
-                className="aspect-video object-cover rounded-t-lg"
+                className=" object-cover rounded-t-lg"
                 height={200}
                 src="/placeholder.svg"
                 width={300}
@@ -78,7 +78,7 @@ export function Marketplace() {
               </Link>
               <img
                 alt="Artwork"
-                className="aspect-video object-cover rounded-t-lg"
+                className=" object-cover rounded-t-lg"
                 height={200}
                 src="/placeholder.svg"
                 width={300}
@@ -100,7 +100,7 @@ export function Marketplace() {
               </Link>
               <img
                 alt="Artwork"
-                className="aspect-video object-cover rounded-t-lg"
+                className=" object-cover rounded-t-lg"
                 height={200}
                 src="/placeholder.svg"
                 width={300}
