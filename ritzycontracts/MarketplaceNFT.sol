@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -12,9 +12,17 @@ contract MarketplaceNFT is ReentrancyGuard {
     Counters.Counter private _itemsSold;
 
     address public owner;
+    uint public fee;
 
-    constructor() {
-        owner == msg.sender;
+    constructor(uint fee_) {
+        require(fee_ <= 50, "Fee <= 50");
+        owner = msg.sender;
+        fee = fee_;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not owner");
+        _;
     }
 
     struct MarketItem {
@@ -76,12 +84,17 @@ contract MarketplaceNFT is ReentrancyGuard {
         uint256 itemId
     ) public payable nonReentrant {
         uint256 price = idToMarketItem[itemId].price;
+        // Calculate the fee amount
+        uint256 marketFee = (price * fee) / 100; 
+        // Calculate the amount to be sent to the seller
+        uint256 amountAfterFee = price - marketFee; 
+
         uint256 tokenId = idToMarketItem[itemId].tokenId;
         bool sold = idToMarketItem[itemId].sold;
         require(msg.value == price, "Submit exactly the asking price to purchase");
         require(sold != true, "Sale already finished");
 
-        idToMarketItem[itemId].seller.transfer(msg.value);
+        idToMarketItem[itemId].seller.transfer(amountAfterFee);
         IERC721(nftContract).transferFrom(address(this), msg.sender, tokenId);
         idToMarketItem[itemId].owner = payable(msg.sender);
         _itemsSold.increment();
@@ -104,4 +117,23 @@ contract MarketplaceNFT is ReentrancyGuard {
         }
         return items;
     }
+
+    function withdrawETH() public payable onlyOwner() {
+        address payable to = payable(owner);
+        to.transfer(getBalance());
+    }
+
+    receive() external payable {
+        //emit Received(msg.sender, msg.value);
+    }
+
+    function getBalance() public view returns(uint) {
+        return address(this).balance;
+    }
+
+    function setFee(uint _fee) public onlyOwner {
+        require(_fee <= 50, "Fee <= 50");
+        fee = _fee;        
+    }
+
 }
