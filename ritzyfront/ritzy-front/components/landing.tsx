@@ -12,7 +12,7 @@ export function Landing() {
           <span className="sr-only">Ritzy Protocol</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 ">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="#marketplace">
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="marketplace">
             Marketplace
           </Link>
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="#drop">
@@ -149,7 +149,7 @@ export function Landing() {
                 />
                 <div className="space-y-1">
                   <h3 className="text-xl font-bold">Chain Agnostic</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400"> Rizty is multichain, deployeable in EVM and no-EVM chains.</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400"> Ritzy is multichain, deployeable in EVM and no-EVM chains.</p>
                 </div>
               </div>
               <div className="flex flex-col items-start space-y-2">
