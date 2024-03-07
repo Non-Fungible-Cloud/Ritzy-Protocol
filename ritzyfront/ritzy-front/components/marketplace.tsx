@@ -3,29 +3,12 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { CardTitle, CardDescription, CardContent, Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Header } from "./ui/header"
 
 export function Marketplace() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex items-center h-14 gap-4 border-b px-6 lg:gap-8 lg:h-20 bg-gray-100/40 dark:bg-gray-800/40">
-
-        <Link className="flex items-center gap-2 font-semibold lg:ml-auto" href="#">
-          <span className="">Ritzy Marketplace</span>
-        </Link>
-        <form className="ml-auto flex-1 lg:ml-0">
-          <div className="relative">
-            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-            <Input
-              className="w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-950"
-              placeholder="Search NFTs..."
-              type="search"
-            />
-          </div>
-        </form>
-        <Button className="lg:ml-4" size="sm" variant="outline">
-          Connect Wallet
-        </Button>
-      </header>
+      <Header />
       <main className="flex-1 grid gap-8 p-4 md:gap-12 md:p-6">
         <section className="grid gap-4">
           <div className="grid gap-4">
@@ -201,26 +184,3 @@ export function Marketplace() {
   )
 }
 
-
-
-
-
-function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  )
-}
