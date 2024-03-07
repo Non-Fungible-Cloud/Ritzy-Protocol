@@ -19,6 +19,12 @@ export default function CollectionForm() {
                         </div>
                         <div className="grid gap-2">
                             <label className="text-base">
+                                Image
+                            </label>
+                            <input id="image" type="file" accept="image/*" />
+                        </div>
+                        <div className="grid gap-2">
+                            <label className="text-base">
                                 Description
                             </label>
                             <textarea
