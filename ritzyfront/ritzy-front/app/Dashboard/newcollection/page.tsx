@@ -4,7 +4,7 @@ import { Dashboard } from "@/components/dashboard";
 import CollectionForm from "@/components/collection-form";
 
 
-export default function DashboardPage() {
+export default function NewCollectionPage() {
   return (
     <div>
       <CollectionForm />
