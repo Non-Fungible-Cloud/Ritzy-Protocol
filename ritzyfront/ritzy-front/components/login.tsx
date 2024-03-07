@@ -1,8 +1,12 @@
+'use client';
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+
+    const router = useRouter();
     return (
             <Card className="m-auto mt-10 sm:w-auto md:w-1/3 ">
                 <CardHeader className="flex items-start gap-2">
@@ -22,11 +26,29 @@ export default function Login() {
                             <label className="text-base">
                                 Password
                             </label>
-                            <Input id="creator" placeholder="password" />
+                            <Input id="pass" placeholder="password" type="password" />
                         </div>
-                        <Button size="lg">Login</Button>
+                        <Button size="lg"
+                        onClick={
+                            (e) => {
+                                e.preventDefault();
+                            if (checkCredentials()) {
+                                router.push('/Dashboard');
+                            }
+                        }
+                        }>Login</Button>
                     </form>
                 </CardContent>
             </Card>
     );
+}
+
+
+function checkCredentials() {
+    const nameInput = document.getElementById('name') as HTMLInputElement;
+    const passwordInput = document.getElementById('pass') as HTMLInputElement;
+    if (nameInput && passwordInput && nameInput.value === 'admin' && passwordInput.value === 'admin') {
+        console.log('Credentials are correct');
+        return true;
+    }
 }

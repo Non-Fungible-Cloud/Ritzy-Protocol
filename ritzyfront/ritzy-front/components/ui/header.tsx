@@ -41,7 +41,7 @@ export function Header() {
   return (
     <header className="flex items-center h-14 gap-4 mb-10 px-6 lg:gap-8 lg:h-20 bg-gray-100/40 dark:bg-gray-800/40">
 
-    <Link className="flex items-center gap-2 font-semibold lg:ml-auto" href="#">
+    <Link className="flex items-center gap-2 font-semibold lg:ml-auto" href="/marketplace">
       <span className="">Ritzy Marketplace</span>
     </Link>
     <form className="ml-auto flex-1 lg:ml-0">

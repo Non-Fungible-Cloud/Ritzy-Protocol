@@ -1,9 +1,13 @@
+'use client';
 
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
 
 export function Landing() {
+
+  const router = useRouter();
   return (
     <div className="flex flex-col min-h-[100dvh] transition-all">
       <header className="px-4 lg:px-6 h-14 flex items-center bg-zinc-900 ">
@@ -12,9 +16,7 @@ export function Landing() {
           <span className="sr-only">Ritzy Protocol</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 ">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="marketplace">
-            Marketplace
-          </Link>
+          <div className="flex items-center gap-2">
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="#drop">
             Drops
           </Link>
@@ -24,6 +26,26 @@ export function Landing() {
           <Link className="text-sm font-medium hover:underline underline-offset-4 " href="#contact">
             Contact
           </Link>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button className="text-sm font-medium hover:underline underline-offset-4 bg-sky-600"
+              onClick={
+                () => {
+                  router.push('/marketplace');
+                }
+              }>
+              Marketplace
+            </Button>
+            <Button className="text-sm font-medium hover:underline underline-offset-4 bg-orange-600"
+            onClick={
+              () => {
+                router.push('/Login');
+              }
+            
+            }>
+              Dashboard
+            </Button>
+          </div>
         </nav>
       </header>
       <main className="flex-1 m-auto">

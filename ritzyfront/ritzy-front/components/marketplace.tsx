@@ -1,11 +1,22 @@
+'use client';
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { CardTitle, CardDescription, CardContent, Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Header } from "./ui/header"
+import { useRouter } from 'next/navigation';
 
 export function Marketplace() {
+
+
+  const router = useRouter();
+
+  function clickOnItem(id:string) {
+    router.push('/marketplace/'+ id);
+  }
+  
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -16,7 +27,13 @@ export function Marketplace() {
               <h1 className="font-semibold text-4xl">Featured Collections</h1>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
                 <img
                   alt="Artwork"
                   className=" object-cover rounded-t-lg"
@@ -33,7 +50,13 @@ export function Marketplace() {
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
 
                 <img
                   alt="Artwork"
@@ -51,7 +74,13 @@ export function Marketplace() {
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
 
                 <img
                   alt="Artwork"
@@ -71,7 +100,13 @@ export function Marketplace() {
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
 
                 <img
                   alt="Artwork"
@@ -98,7 +133,13 @@ export function Marketplace() {
               <h1 className="font-semibold text-4xl">User Posted</h1>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card>
+            <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
 
                 <img
                   alt="Artwork"
@@ -116,7 +157,13 @@ export function Marketplace() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
                 <img
                   alt="Artwork"
                   className=" object-cover rounded-t-lg"
@@ -133,7 +180,13 @@ export function Marketplace() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
                 <img
                   alt="Artwork"
                   className=" object-cover rounded-t-lg"
@@ -149,7 +202,13 @@ export function Marketplace() {
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={
+                (e) => {
+                  e.preventDefault();
+                  const id = '1';
+                  clickOnItem(id);
+                }
+              } className="cursor-pointer">
                 <img
                   alt="Artwork"
                   className=" object-cover rounded-t-lg"
@@ -183,4 +242,5 @@ export function Marketplace() {
     </div>
   )
 }
+
 

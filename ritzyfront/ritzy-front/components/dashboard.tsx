@@ -1,10 +1,14 @@
+'use client';
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
-
+import { useRouter } from 'next/navigation';
 export function Dashboard() {
+
+  const router = useRouter();
+
   return (
     <div className="flex min-h-screen w-full">
       <div className="border-r w-[250px] py-4">
@@ -68,14 +72,26 @@ export function Dashboard() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={
+                (e) => {
+                  e.preventDefault();
+                  router.push('/');
+                }
+              }>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
         <main className="flex-1 flex flex-col gap-4">
           <div className="flex items-center">
             <h1 className="font-semibold text-lg md:text-2xl">Collections</h1>
-            <Button className="ml-auto" size="sm">
+            <Button className="ml-auto" size="sm"
+            onClick={
+              (e) => {
+                e.preventDefault();
+                router.push('/Dashboard/newcollection');
+              }
+            
+            }>
               Add Collection
             </Button>
           </div>
