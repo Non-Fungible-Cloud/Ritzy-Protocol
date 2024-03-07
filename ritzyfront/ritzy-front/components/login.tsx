@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 
 export default function Login() {
     return (
-            <Card className="m-auto mt-10 w-1/3">
+            <Card className="m-auto mt-10 sm:w-auto md:w-1/3 ">
                 <CardHeader className="flex items-start gap-2">
                     <CardTitle>Login</CardTitle>
                     <CardDescription>Enter your credentials or <a className="underline cursor-pointer">Sign Up</a></CardDescription>
