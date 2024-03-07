@@ -1,8 +1,43 @@
+"use client"
 import Link from "next/link";
 import { Input } from "./input";
 import { Button } from "./button";
+import { useState } from "react";
+import { ethers } from "ethers";
+
+declare global {
+  interface Window {
+    ethereum: any
+  }
+}
+
 
 export function Header() {
+
+  const [connected, setConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
+
+  // Function to connect/disconnect the wallet
+  async function connectWallet() {
+    if (!connected) {
+      // Connect the wallet using ethers.js
+      console.log("Connecting wallet...");
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const _walletAddress = await signer.getAddress();
+      console.log("Connected wallet:", _walletAddress);
+      setConnected(true);
+      setWalletAddress(_walletAddress);
+    } else {
+      // Disconnect the wallet
+      //window.ethereum.selectedAddress = null;
+      setConnected(false);
+      setWalletAddress("");
+    }
+  }
+
+
+
   return (
     <header className="flex items-center h-14 gap-4 mb-10 px-6 lg:gap-8 lg:h-20 bg-gray-100/40 dark:bg-gray-800/40">
 
@@ -19,8 +54,9 @@ export function Header() {
         />
       </div>
     </form>
-    <Button className="lg:ml-4" size="sm" variant="outline">
-      Connect Wallet
+    <Button className="lg:ml-4" size="sm" variant="outline" onClick={connectWallet}>
+        {connected ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(walletAddress.length - 4,walletAddress.length)}` 
+        : "Connect Wallet"}
     </Button>
   </header>
   );
