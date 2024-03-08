@@ -6,9 +6,10 @@ import { CardTitle, CardDescription, CardContent, Card } from "@/components/ui/c
 import { Badge } from "@/components/ui/badge"
 import { Header } from "./ui/header"
 import { useRouter } from 'next/navigation';
+import { fetchMarketItems } from "./wallet/chainFunctions";
+
 
 export function Marketplace() {
-
 
   const router = useRouter();
 
@@ -16,6 +17,7 @@ export function Marketplace() {
     router.push('/marketplace/'+ id);
   }
   
+  fetchMarketItems();
 
   return (
     <div className="flex flex-col min-h-screen">

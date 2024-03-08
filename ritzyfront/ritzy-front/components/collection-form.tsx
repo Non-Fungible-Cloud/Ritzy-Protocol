@@ -1,10 +1,13 @@
+'use client'
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
+import { MintNFT } from "./wallet/chainFunctions";
 
 export default function CollectionForm() {
     return (
             <Card className="m-auto mt-10 sm:w-auto md:w-1/3 ">
+                <MintNFT />
                 <CardHeader className="flex items-start gap-2">
                     <CardTitle>Collection Details</CardTitle>
                     <CardDescription>Enter your collection information</CardDescription>
