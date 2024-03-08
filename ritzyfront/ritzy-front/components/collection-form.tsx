@@ -1,10 +1,28 @@
 'use client'
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
 import { MintNFT } from "./wallet/chainFunctions";
 
 export default function CollectionForm() {
+
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [creator, setCreator] = useState('');
+    const [evmadd, setEvmadd] = useState('');
+    const [quantity, setQuantity] = useState(0);
+    const [image, setImage] = useState('');
+    
+
+    const handleSubmit = () => {
+        console.log(name);
+        console.log('submitted');
+    }
+
+
+
+
     return (
             <Card className="m-auto mt-10 sm:w-auto md:w-1/3 ">
                 <MintNFT />
@@ -13,12 +31,12 @@ export default function CollectionForm() {
                     <CardDescription>Enter your collection information</CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-start">
-                    <form className="grid gap-4 w-full md:gap-6">
+                    <form className="grid gap-4 w-full md:gap-6" onSubmit={handleSubmit}>
                         <div className="grid gap-2">
                             <label className="text-base">
                                 Name
                             </label>
-                            <Input id="name" placeholder="My Awesome Collection" />
+                            <Input id="name" placeholder="My Awesome Collection" onChange={(e)=> setName}/>
                         </div>
                         <div className="grid gap-2">
                             <label className="text-base">

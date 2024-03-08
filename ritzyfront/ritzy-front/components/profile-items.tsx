@@ -3,14 +3,39 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { Header } from "./ui/header";
 import { useRouter } from 'next/navigation';
+import { useAddress } from "@thirdweb-dev/react";
+import { getIDsOfAddress, tokenURI } from "./wallet/chainFunctions";
+import { use, useEffect, useState } from "react";
+import { it } from "node:test";
 
 export function ProfileItems() {
+
+    const address = useAddress();
+    const items = getIDsOfAddress(address!);
+
+    const[itemsIdsInt, setItemsIdsInt] = useState<number[]>([]);
+
+    useEffect(() => {
+
+        if(!items.isLoading){
+            const itemsIdsInt = items!.data.map(Number);
+            setItemsIdsInt(itemsIdsInt);
+        }
+
+    }, [items.isLoading, items.data]);
+
+
+    if(itemsIdsInt!==undefined){
+        const itemsUri = tokenURI(1);
+        console.log(itemsUri);
+    }
 
     const router = useRouter();
 
     function clickOnItem(id:string) {
         router.push('/marketplace/'+ id);
       }
+
 
 
     return (
