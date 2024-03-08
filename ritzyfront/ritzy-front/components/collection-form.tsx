@@ -44,9 +44,9 @@ export default function CollectionForm() {
                         </div>
                         <div className="grid gap-2">
                             <label className="text-base">
-                                Price
+                                EVM address
                             </label>
-                            <Input id="price" placeholder="100" type="number" />
+                            <Input id="evmadd" placeholder="0x...." type="string" />
                         </div>
                         <div className="grid gap-2">
                             <label className="text-base" >

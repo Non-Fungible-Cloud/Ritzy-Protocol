@@ -48,7 +48,7 @@ export function Dashboard() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800 dark:border-gray-800"
+                className="rounded-full border border-gray-200 w-8 h-8  dark:border-gray-800"
                 size="icon"
                 variant="ghost"
               >
@@ -119,7 +119,7 @@ export function Dashboard() {
                   </TableCell>
                   <TableCell className="font-medium">Vino Tinto </TableCell>
                   <TableCell className="hidden md:table-cell">100</TableCell>
-                  <TableCell>0.05 ETH</TableCell>
+                  <TableCell>0.05 CFX</TableCell>
                   <TableCell className="hidden md:table-cell">0xF6b705595E95c8D94E22B38570e79f8BaFa39558
                   </TableCell>
                 </TableRow>
