@@ -33,6 +33,13 @@ function balanceOf(address: string) {
   return { data, isLoading };
 };
 
+function getIDsOfAddress(address: string) { 
+  const { contract } = useContract(NFTAddress, NFTABI);  
+  const { data, isLoading } = useContractRead(contract, "getIDsOf", [address]);
+  console.log(data);
+  return { data, isLoading };
+};
+
 function tokenURI(tokenID: number) { 
   const { contract } = useContract(NFTAddress, NFTABI);    
   const { data, isLoading } = useContractRead(contract, "tokenURI", [tokenID]);
@@ -201,7 +208,7 @@ function getRSBTURI() {
 };
 
 
-export {MintNFT, balanceOf, tokenURI, 
+export {MintNFT, balanceOf, getIDsOfAddress, tokenURI, 
   createMarketItemButton, purchaseItemButton, approveButton, setFeeButton, withdrawBalanceButton,
   fetchMarketItems, getOwner, getFee, getMarketplaceBalance,
   burnNFTButton, getRSBTBalance, getRSBTURI};
