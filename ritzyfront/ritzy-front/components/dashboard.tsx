@@ -84,7 +84,7 @@ export function Dashboard() {
         <main className="flex-1 flex flex-col gap-4">
           <div className="flex items-center">
             <h1 className="font-semibold text-lg md:text-2xl">Collections</h1>
-            <Button className="ml-auto" size="sm"
+            <Button className="ml-auto" size="sm" variant="outline"
             onClick={
               (e) => {
                 e.preventDefault();

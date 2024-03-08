@@ -54,7 +54,7 @@ export default function CollectionForm() {
                             </label>
                             <Input id="quantity" placeholder="10" type="number" />
                         </div>
-                        <Button size="lg">Save</Button>
+                        <Button size="lg" variant="outline">Save</Button>
                     </form>
                 </CardContent>
             </Card>

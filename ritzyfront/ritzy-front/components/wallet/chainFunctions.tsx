@@ -26,7 +26,7 @@ const MintNFT = () => {
 };
 
 function balanceOf(address: string) { 
-  const { contract } = useContract(MarketplaceAddress, MarketplaceABI);  
+  const { contract } = useContract(NFTAddress, NFTABI);  
   const { data, isLoading } = useContractRead(contract, "balanceOf", [address]);
 
   console.log(data);
@@ -34,7 +34,7 @@ function balanceOf(address: string) {
 };
 
 function tokenURI(tokenID: number) { 
-  const { contract } = useContract(MarketplaceAddress, MarketplaceABI);  
+  const { contract } = useContract(NFTAddress, NFTABI);    
   const { data, isLoading } = useContractRead(contract, "tokenURI", [tokenID]);
 
   console.log(data);
