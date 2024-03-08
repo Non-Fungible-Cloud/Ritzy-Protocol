@@ -1,10 +1,16 @@
+'use client';
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Header } from "./ui/header"
+import { useRouter } from 'next/navigation';
 
 export function ItemView() {
+
+
+  const router = useRouter();
+
   return (
     <div className="flex flex-col min-h-screen">
 
@@ -57,7 +63,7 @@ export function ItemView() {
                 <CardTitle>Price</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
-                <div className="font-semibold text-2xl">0.05 ETH</div>
+                <div className="font-semibold text-2xl">0.05 CFX</div>
               </CardContent>
             </Card>
             <Card>
@@ -81,13 +87,26 @@ export function ItemView() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex flex-col gap-4 min-[400px]:flex-row">
-            <Button size="lg">Purchase NFT</Button>
-            <Button size="lg" variant="outline">
+          <div className="flex flex-col gap-4">
+            <Button size="lg" variant="outline"
+            onClick={
+              () => {
+                router.push('/marketplace/{{id}/burn');
+              }
+            
+            }>Claim Physical Item</Button>
+            <Button size="lg" variant="outline">Purchase NFT</Button>
+            <Button size="lg" variant="outline"
+            onClick={
+              () => {
+                router.push('/marketplace/{{id}/list');
+              }
+            }>
               <PlusIcon className="w-4 h-4 mr-2" />
               List NFT for Sale
             </Button>
           </div>
+
         </div>
       </div>
     </div>

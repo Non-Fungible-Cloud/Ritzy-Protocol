@@ -22,7 +22,7 @@ export function Marketplace() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1 grid gap-8 p-4 md:gap-12 md:p-6">
+      <main className="flex-1 grid gap-8 ml-10 md:gap-12 md:p-6">
         <section className="grid gap-4">
           <div className="grid gap-4">
             <div className="grid items-center gap-2">
@@ -47,7 +47,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
                   <CardDescription className="text-sm">Bodegas Campos</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.05 ETH</div>
+                    <div className="font-semibold">0.05 CFX</div>
                     <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">100</Badge>
                   </div>
                 </CardContent>
@@ -71,7 +71,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Ferrari ToroNegro</CardTitle>
                   <CardDescription className="text-sm">Ferrari</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">100 ETH</div>
+                    <div className="font-semibold">100 CFX</div>
                     <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">5</Badge>
                   </div>
                 </CardContent>
@@ -97,7 +97,7 @@ export function Marketplace() {
                     Ethereum Foundation X Rolex
                   </CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">2 ETH</div>
+                    <div className="font-semibold">2 CFX</div>
                     <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">50</Badge>
                   </div>
                 </CardContent>
@@ -121,7 +121,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Racket Nadal</CardTitle>
                   <CardDescription className="text-sm">Rafael Nadal</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.1 ETH</div>
+                    <div className="font-semibold">0.1 CFX</div>
                     <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">1000</Badge>
                   </div>
                 </CardContent>
@@ -154,7 +154,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Racket Nadal</CardTitle>
                   <CardDescription className="text-sm">Rafael Nadal</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.3 ETH</div>
+                    <div className="font-semibold">0.3 CFX</div>
                   </div>
                 </CardContent>
               </Card>
@@ -177,7 +177,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
                   <CardDescription className="text-sm">Bodegas Campos</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.041 ETH</div>
+                    <div className="font-semibold">0.041 CFX</div>
                   </div>
                 </CardContent>
               </Card>
@@ -200,7 +200,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
                   <CardDescription className="text-sm">Bodegas Campos</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.04 ETH</div>
+                    <div className="font-semibold">0.04 CFX</div>
                   </div>
                 </CardContent>
               </Card>
@@ -222,7 +222,7 @@ export function Marketplace() {
                   <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
                   <CardDescription className="text-sm">Bodegas Campos</CardDescription>
                   <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.045 ETH</div>
+                    <div className="font-semibold">0.045 CFX</div>
                   </div>
                 </CardContent>
               </Card>
