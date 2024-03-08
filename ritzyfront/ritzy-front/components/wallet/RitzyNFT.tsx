@@ -1,4 +1,4 @@
-export const NFTAddress = "0xF6b705595E95c8D94E22B38570e79f8BaFa39558";
+export const NFTAddress = "0x7d1b797B4bAe643a9b2ef8536fF1A1AADf6B2807";
 export const NFTABI = [
 	{
 		"inputs": [],
@@ -307,6 +307,25 @@ export const NFTABI = [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "addr",
+				"type": "address"
+			}
+		],
+		"name": "getIDsOf",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",

@@ -1,4 +1,4 @@
-export const BurnAddress = "0x657f7a9e0D3886649A3e07E158B213C8d8E88ABA";
+export const BurnAddress = "0x8D71D79A41Fd504E00C6Fbaa4cDa12df9fC44AAE";
 export const BurnABI = [
 	{
 		"inputs": [
