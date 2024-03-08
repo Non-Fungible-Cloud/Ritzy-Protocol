@@ -21,7 +21,7 @@ export function ItemView() {
           <div className="grid gap-4">
             <img
               alt="NFT Image"
-              className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800 dark:border-gray-800"
+              className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800 "
               height={600}
               src="/images/ferraridrop.jpg"
               width={600}

@@ -48,7 +48,7 @@ export function Dashboard() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800 dark:border-gray-800"
+                className="rounded-full border border-gray-200 w-8 h-8  dark:border-gray-800"
                 size="icon"
                 variant="ghost"
               >
