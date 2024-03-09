@@ -5,8 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input";
 import { MintNFT, approveButton, createMarketItemButton } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
-import { BigNumber } from "ethers";
 import { Header } from "./ui/header";
+import { BigNumber, utils } from "ethers";
 
 export default function ListForm() {
 
@@ -43,7 +43,7 @@ export default function ListForm() {
 
     const listNFT = (price: string) => {
 
-        const convertedPrice = BigNumber.from(Number(price)).mul(10).pow(18);
+        const convertedPrice = utils.parseEther(price ? price : "0.0");
         console.log(convertedPrice);
         return createMarketItemButton(urlkey, convertedPrice);
     }
