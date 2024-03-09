@@ -36,7 +36,7 @@ function balanceOf(address: string) {
 function getIDsOfAddress(address: string) { 
   const { contract } = useContract(NFTAddress, NFTABI);  
   const { data, isLoading } = useContractRead(contract, "getIDsOf", [address]);
-  console.log(data);
+  //console.log(data);
   return { data, isLoading };
 };
 

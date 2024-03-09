@@ -6,41 +6,31 @@ import { useRouter } from 'next/navigation';
 import { useAddress } from "@thirdweb-dev/react";
 import { getIDsOfAddress, tokenURI } from "./wallet/chainFunctions";
 import { use, useEffect, useState } from "react";
+import { get } from "http";
 
 export function ProfileItems() {
 
-    const ipfsURL = "https://ipfs.io/ipfs/";
     const address = useAddress();
-    const items = getIDsOfAddress(address!);
+    const {data, isLoading} = getIDsOfAddress(address!);
 
-    const[itemsIdsInt, setItemsIdsInt] = useState<number[]>([]);
     const[itemsUri, setItemsUri] = useState<string[]>([]);
 
     useEffect(() => {
-
-        if(!items.isLoading){
-            const itemsIdsInt = items!.data.map(Number);
-            setItemsIdsInt(itemsIdsInt);
-        }
-
-
-    }, [items.isLoading, items.data]);
-
-
-    getIpfsUri();
-
-    function getUri(id: number){
-        const uri = tokenURI(id);
-        return uri;
-    }
-    function getIpfsUri(){
-      if(itemsIdsInt! !== undefined){
-        const result = itemsIdsInt!.map(getUri);
-        const resultipfs = result.map((uri) => ipfsURL + uri);
-          setItemsUri(resultipfs);
+      if(!isLoading){
+        getAllUris(data.map(Number));
       }
-    }
+    }, [isLoading]);
 
+
+    function getAllUris(itemsIdsInt: number[]){
+      console.log("Entrando en getAllUris con itemsIdsInt: ", itemsIdsInt);
+        itemsIdsInt.map((id) => {
+            const {data: uri, isLoading: uriLoading} = tokenURI(id);
+            if(!uriLoading){
+                setItemsUri([...itemsUri, uri]);
+            }
+        });
+    }
 
 
     const router = useRouter();
