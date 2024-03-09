@@ -19,11 +19,9 @@ export function ProfileItems() {
     const [URIs, setURIs] = useState<string[]>([]);
 
     useEffect(() => {
-      console.log("addr" + address);
       const array: string[] = [];
       if(data != undefined && data.length == balance && URIs.length != balance){
         data.forEach((id: number)  => {
-          console.log("vamos por el id" + id);
           getNFTtokenUri(id).then((newuri:string) => {
             array.push(newuri);
             if(array.length == balance){
