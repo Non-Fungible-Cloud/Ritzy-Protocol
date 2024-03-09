@@ -7,6 +7,8 @@ import { MintNFT, burnNFTButton, approveBurnButton, getNFTtokenUri } from "./wal
 import { useRouter } from 'next/navigation';
 import { get } from "http";
 import { time } from "console";
+import Head from "next/head";
+import { Header } from "./ui/header";
 
 export default function BurnForm() {
 
@@ -41,6 +43,8 @@ export default function BurnForm() {
 
     const router = useRouter();
     return (
+        <div>
+            <Header />
             <Card className="m-auto mt-10 sm:w-auto md:w-1/3 ">
                 <CardHeader className="flex items-start gap-2">
                     <CardTitle>Claim Details</CardTitle>
@@ -70,5 +74,6 @@ export default function BurnForm() {
                     </div>
                 </CardContent>
             </Card>
+        </div>
     );
 }

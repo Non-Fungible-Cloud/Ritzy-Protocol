@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { MintNFT, approveButton, createMarketItemButton } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
 import { BigNumber } from "ethers";
+import { Header } from "./ui/header";
 
 export default function ListForm() {
 
@@ -52,6 +53,8 @@ export default function ListForm() {
 
 
     return (
+        <div>
+        <Header/>
             <Card className="m-auto mt-10 sm:w-auto md:w-1/3 ">
                 <CardHeader className="flex items-start gap-2">
                     <CardTitle>List Details</CardTitle>
@@ -75,5 +78,6 @@ export default function ListForm() {
                     </div>
                 </CardContent>
             </Card>
+        </div>
     );
 }
