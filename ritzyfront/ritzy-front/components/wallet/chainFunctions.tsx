@@ -3,7 +3,7 @@ import { Web3Button, useContractRead, useContract, useContractWrite } from "@thi
 import { NFTAddress, NFTABI } from "./RitzyNFT";
 import { MarketplaceAddress, MarketplaceABI } from "./RitzyMarketplace";
 import { BurnABI, BurnAddress } from "./RitzyBurnNFT";
-import { ethers, utils } from "ethers";
+import { BigNumber, ethers, utils } from "ethers";
 
 /*                            *
  *                            *
@@ -89,14 +89,15 @@ function approveButton(tokenID: number) {
     </Web3Button>);
 };
 
-function createMarketItemButton(tokenID: number, price: number) { 
+function createMarketItemButton(tokenID: number, price: BigNumber) { 
     
   return (
   <Web3Button
       contractAddress={MarketplaceAddress}
       contractAbi={MarketplaceABI}
       // Call the name of your smart contract function
-      action={(contract) => contract.call("createMarketItem", [NFTAddress, tokenID, price])}
+      action={(contract) => 
+        contract.call("createMarketItem", [NFTAddress, tokenID, price])}
     >
       Sell Item
     </Web3Button>);

@@ -5,11 +5,37 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Header } from "./ui/header"
 import { useRouter } from 'next/navigation';
+import { useAddress } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
+import { getNFTOwner, getNFTtokenUri } from "./wallet/chainFunctions";
 
 export function ItemView() {
 
+  const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
+  const address = useAddress();
 
   const router = useRouter();
+
+  const [nft, setNft] = useState({
+    name: '',
+    description: '',
+    image: '',
+    Owner: '',
+    tokenID: urlkey,
+    Creator: ''
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+  
+
+  useEffect(() => {
+    getNFTOwner(urlkey).then((newowner:string) => {
+      setNft({ ...nft, Owner: newowner });
+    }
+    );
+
+  }, [nft]);
+
 
   return (
     <div className="flex flex-col min-h-screen">

@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input";
 import { MintNFT, approveButton, createMarketItemButton } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
+import { BigNumber } from "ethers";
 
 export default function ListForm(id: number) {
 
@@ -23,7 +24,7 @@ export default function ListForm(id: number) {
     }
 
     const approveNft = () => {
-        return approveButton(2);
+        return approveButton(3);
     }
 
 
@@ -34,9 +35,11 @@ export default function ListForm(id: number) {
         }, 20000);
     }
 
-    const listNFT = (price:string) => {
+    const listNFT = (price: string) => {
 
-        return createMarketItemButton(2, Number(price));
+        const convertedPrice = BigNumber.from(Number(price)).mul(10).pow(18);
+        console.log(convertedPrice);
+        return createMarketItemButton(3, convertedPrice);
     }
 
 
@@ -57,18 +60,10 @@ export default function ListForm(id: number) {
                             </label>
                             <Input id="price" placeholder="100" value={price} onChange={e => setPrice(e.target.value)} />
                         </div>
-                        <Button size="lg" variant="outline"
-                        onClick={
-                            (e) => {
-                                e.preventDefault();
-                                router.push('/marketplace/');
-                            }
-                        }>List</Button>
                         <div onClick={showListButton} id="approve" className="block">
                             {approveNft()}
                         </div>
                         <div id="listNFT" className="hidden" 
-                            onClick={() => router.push('/marketplace/')}
                         >
                             {listNFT(price)}
                         </div>
