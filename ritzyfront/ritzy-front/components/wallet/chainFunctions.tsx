@@ -3,7 +3,7 @@ import { Web3Button, useContractRead, useContract, useContractWrite } from "@thi
 import { NFTAddress, NFTABI } from "./RitzyNFT";
 import { MarketplaceAddress, MarketplaceABI } from "./RitzyMarketplace";
 import { BurnABI, BurnAddress } from "./RitzyBurnNFT";
-import { utils } from "ethers";
+import { ethers, utils } from "ethers";
 
 /*                            *
  *                            *
@@ -28,15 +28,13 @@ const MintNFT = () => {
 function balanceOf(address: string) { 
   const { contract } = useContract(NFTAddress, NFTABI);  
   const { data, isLoading } = useContractRead(contract, "balanceOf", [address]);
-
-  console.log(data);
-  return { data, isLoading };
+  const balance = data;
+  return { balance, isLoading };
 };
 
 function getIDsOfAddress(address: string) { 
   const { contract } = useContract(NFTAddress, NFTABI);  
   const { data, isLoading } = useContractRead(contract, "getIDsOf", [address]);
-  //console.log(data);
   return { data, isLoading };
 };
 
@@ -44,10 +42,20 @@ function tokenURI(tokenID: number) {
   const { contract } = useContract(NFTAddress, NFTABI);    
   const { data, isLoading } = useContractRead(contract, "tokenURI", [tokenID]);
 
-  console.log(data);
   return { data, isLoading };
 };
 
+
+export async function getNFTtokenUri(id: number): Promise<any> {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const contract = new ethers.Contract(
+    NFTAddress,
+    NFTABI,
+    provider.getSigner()
+  );
+  const uri = contract.tokenURI(id);
+  return uri;
+}
 
 /*                            *
  *                            *
