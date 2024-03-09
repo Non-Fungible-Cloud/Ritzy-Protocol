@@ -120,10 +120,12 @@ export function ProfileItems() {
 
 
     useEffect(() => {
+      console.log(Nfts.length + " " + balance + " " + SBTs.length + " " + sbtbalance)
       if(Nfts.length == balance && Nfts.length != 0 && SBTs.length == sbtbalance){
         setIsLoading(false);
+        console.log("Set loading to false")
       }
-    }, [Nfts]);
+    }, [Nfts, balance, SBTs, sbtbalance]);
 
     const router = useRouter();
 
