@@ -8,7 +8,14 @@ import { balanceOf, getIDsOfAddress, getNFTOwner, getNFTtokenUri, tokenURI } fro
 import { use, useEffect, useState } from "react";
 import { get } from "http";
 
+export class Nft {
+  name!: string;
+  description!: string;
+  image!: string;
+}
+
 export function ProfileItems() {
+
 
     const address = useAddress();
     //const address = "0x4c8f2e1A98397EbD82e780A6e791a0b09202E25c"
@@ -17,7 +24,7 @@ export function ProfileItems() {
     
     const [isLoading, setIsLoading] = useState(true);
     const [URIs, setURIs] = useState<string[]>([]);
-    const [Nfts, setNfts] = useState([]);
+    const [Nfts, setNfts] = useState<Nft[]>([]);
 
     useEffect(() => {
       const array: string[] = [];
@@ -40,11 +47,19 @@ export function ProfileItems() {
 
     useEffect(() => {
       if(URIs.length == balance && URIs.length != 0){
-        setIsLoading(false);
-
         readFromIpfs(URIs);
+
       }
     }, [balance, URIs]);
+
+
+    useEffect(() => {
+      console.log(Nfts.length);
+      if(Nfts.length == balance && Nfts.length != 0){
+        console.log("hola");
+        setIsLoading(false);
+      }
+    }, [balance, Nfts]);
 
     const router = useRouter();
 
@@ -54,17 +69,51 @@ export function ProfileItems() {
 
 
     function readFromIpfs(uris: string[]) {
+      const nftslist: Nft[] = [];
       uris.forEach((uri: string) => {
         fetch(uri).then(response => response.json())
         .then(data => {
-          setNfts(data);
-          console.log(data);
+          const nft = new Nft();
+          nft.name = data.name;
+          nft.description = data.description;
+          nft.image = data.image;
+          nftslist.push(nft);
         });
       });
+      setNfts(nftslist);
+      console.log(Nfts);
     }
 
     
+    function MapNfts(nfts: Nft[]) {
+      return nfts.map((nft) => {
+        return (
+          <Card onClick={
+            (e) => {
+              e.preventDefault();
+              const id = '1';
+              clickOnItem(id);
+            }
+          } className="cursor-pointer">
+            <img
+              alt="Artwork"
+              className=" object-cover rounded-t-lg"
+              height={200}
+              src={nft.image}
+              width={300}
+            />
+            <CardContent className="pb-4">
+              <CardTitle className="text-base font-semibold">{nft.name} </CardTitle>
+              <CardDescription className="text-sm">{nft.description}</CardDescription>
+              <div className="flex items-center gap-2">
+                <div className="font-semibold">CFX</div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      });
 
+    }
 
 
     
@@ -80,28 +129,7 @@ export function ProfileItems() {
                  <h1 className="font-semibold text-4xl">My Nfts</h1>
                </div>
                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                 <Card onClick={
-                   (e) => {
-                     e.preventDefault();
-                     const id = '1';
-                     clickOnItem(id);
-                   }
-                 } className="cursor-pointer">
-                   <img
-                     alt="Artwork"
-                     className=" object-cover rounded-t-lg"
-                     height={200}
-                     src="/images/winedrop.jpg"
-                     width={300}
-                   />
-                   <CardContent className="pb-4">
-                     <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
-                     <CardDescription className="text-sm">Bodegas Campos</CardDescription>
-                     <div className="flex items-center gap-2">
-                       <div className="font-semibold">0.05 CFX</div>
-                     </div>
-                   </CardContent>
-                 </Card>
+                  {MapNfts(Nfts)}
  
                </div>
              </div>
