@@ -6,14 +6,15 @@ import { useRouter } from 'next/navigation';
 import { useAddress } from "@thirdweb-dev/react";
 import { getIDsOfAddress, tokenURI } from "./wallet/chainFunctions";
 import { use, useEffect, useState } from "react";
-import { it } from "node:test";
 
 export function ProfileItems() {
 
+    const ipfsURL = "https://ipfs.io/ipfs/";
     const address = useAddress();
     const items = getIDsOfAddress(address!);
 
     const[itemsIdsInt, setItemsIdsInt] = useState<number[]>([]);
+    const[itemsUri, setItemsUri] = useState<string[]>([]);
 
     useEffect(() => {
 
@@ -22,13 +23,25 @@ export function ProfileItems() {
             setItemsIdsInt(itemsIdsInt);
         }
 
+
     }, [items.isLoading, items.data]);
 
 
-    if(itemsIdsInt!==undefined){
-        const itemsUri = tokenURI(1);
-        console.log(itemsUri);
+    getIpfsUri();
+
+    function getUri(id: number){
+        const uri = tokenURI(id);
+        return uri;
     }
+    function getIpfsUri(){
+      if(itemsIdsInt! !== undefined){
+        const result = itemsIdsInt!.map(getUri);
+        const resultipfs = result.map((uri) => ipfsURL + uri);
+          setItemsUri(resultipfs);
+      }
+    }
+
+
 
     const router = useRouter();
 
