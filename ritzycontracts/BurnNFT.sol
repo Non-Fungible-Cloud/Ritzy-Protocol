@@ -10,6 +10,8 @@ contract Soulbound is ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;
     ERC721 ritzyNFT;
 
+    mapping(address => uint256[]) private _addressToTokenIds;
+
     constructor(address _ritzyNFT) ERC721("Ritzy SoulBound", "RSBT") Ownable(msg.sender) {
         ritzyNFT = ERC721(_ritzyNFT);
         
@@ -40,6 +42,11 @@ contract Soulbound is ERC721URIStorage, Ownable {
         _tokenIdCounter += 1;
         _safeMint(to, _tokenIdCounter);
         _setTokenURI(_tokenIdCounter, tokenURI);
+        _addressToTokenIds[to].push(_tokenIdCounter);
+    }
+
+    function getSBTsOfAddress(address addr) public view returns(uint256[] memory){
+        return _addressToTokenIds[addr];
     }
 
 }

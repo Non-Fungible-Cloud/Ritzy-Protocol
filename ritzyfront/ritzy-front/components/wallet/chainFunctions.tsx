@@ -177,6 +177,20 @@ function getMarketplaceBalance() {
  *                            *
  *                            * 
  *                            */
+//Prior burning the NFT, we have to approve the transfer, make 2 transactions
+function approveBurnButton(tokenID: string) { 
+    
+  return (
+  <Web3Button
+      contractAddress={NFTAddress}
+      contractAbi={NFTABI}
+      // Call the name of your smart contract function
+      action={(contract) => contract.call("approve", [BurnAddress, tokenID])}
+    >
+      Approve
+    </Web3Button>);
+};
+
 function burnNFTButton(tokenID: number) {
 
   return (
@@ -191,17 +205,25 @@ function burnNFTButton(tokenID: number) {
 };
 
 
-function getRSBTBalance() { 
+function getRSBTBalance(address: String) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
-  const { data, isLoading } = useContractRead(contract, "balanceOf");
+  const { data, isLoading } = useContractRead(contract, "balanceOf", [address]);
 
   console.log(data);
   return data;
 };
 
-function getRSBTURI() { 
+function getRSBTURI(tokenID: number) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
-  const { data, isLoading } = useContractRead(contract, "tokenURI");
+  const { data, isLoading } = useContractRead(contract, "tokenURI", [tokenID]);
+
+  console.log(data);
+  return data;
+};
+
+function getSBTsOfAddress(address: String) { 
+  const { contract } = useContract(BurnAddress, BurnABI);  
+  const { data, isLoading } = useContractRead(contract, "getSBTsOfAddress", [address]);
 
   console.log(data);
   return data;
@@ -211,4 +233,4 @@ function getRSBTURI() {
 export {MintNFT, balanceOf, getIDsOfAddress, tokenURI, 
   createMarketItemButton, purchaseItemButton, approveButton, setFeeButton, withdrawBalanceButton,
   fetchMarketItems, getOwner, getFee, getMarketplaceBalance,
-  burnNFTButton, getRSBTBalance, getRSBTURI};
+  approveBurnButton, burnNFTButton, getRSBTBalance, getRSBTURI, getSBTsOfAddress};
