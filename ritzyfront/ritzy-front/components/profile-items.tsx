@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { Header } from "./ui/header";
 import { useRouter } from 'next/navigation';
 import { useAddress } from "@thirdweb-dev/react";
-import { balanceOf, getIDsOfAddress, getNFTOwner, getNFTtokenUri, tokenURI } from "./wallet/chainFunctions";
+import { BalanceOf, GetIDsOfAddress, getNFTOwner, getNFTtokenUri } from "./wallet/chainFunctions";
 import { use, useEffect, useState } from "react";
 import { get } from "http";
 
@@ -21,8 +21,8 @@ export function ProfileItems() {
 
     const address = useAddress();
     //const address = "0x4c8f2e1A98397EbD82e780A6e791a0b09202E25c"
-    const { data, } = getIDsOfAddress(address ? address : "");
-    const { balance } = balanceOf(address ? address : "");
+    const { data, } = GetIDsOfAddress(address ? address : "");
+    const { balance } = BalanceOf(address ? address : "");
     
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingNfts, setIsLoadingNfts] = useState(true);

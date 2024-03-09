@@ -25,23 +25,16 @@ const MintNFT = () => {
   );
 };
 
-function balanceOf(address: string) { 
+function BalanceOf(address: string) { 
   const { contract } = useContract(NFTAddress, NFTABI);  
   const { data, isLoading } = useContractRead(contract, "balanceOf", [address]);
   const balance = data;
   return { balance, isLoading };
 };
 
-function getIDsOfAddress(address: string) { 
+function GetIDsOfAddress(address: string) { 
   const { contract } = useContract(NFTAddress, NFTABI);  
   const { data, isLoading } = useContractRead(contract, "getIDsOf", [address]);
-  return { data, isLoading };
-};
-
-function tokenURI(tokenID: number) { 
-  const { contract } = useContract(NFTAddress, NFTABI);    
-  const { data, isLoading } = useContractRead(contract, "tokenURI", [tokenID]);
-
   return { data, isLoading };
 };
 
@@ -104,7 +97,7 @@ function createMarketItemButton(tokenID: number, price: BigNumber) {
 };
 
 
-function purchaseItemButton(tokenID: number, price: string) { 
+/* function purchaseItemButton(tokenID: number, price: string) { 
   const { contract } = useContract(MarketplaceAddress, MarketplaceABI);
 
   const { mutateAsync, isLoading, error } = useContractWrite(
@@ -128,7 +121,7 @@ function purchaseItemButton(tokenID: number, price: string) {
     >
       Purchase Item
     </Web3Button>);
-};
+}; */
 
 //Only admin
 function setFeeButton(fee: number) { 
@@ -157,7 +150,7 @@ function withdrawBalanceButton(fee: number) {
 
 
 //  GETTERS
-function fetchMarketItems() { 
+function FetchMarketItems() { 
   const { contract } = useContract(MarketplaceAddress, MarketplaceABI);  
   const { data, isLoading } = useContractRead(contract, "fetchMarketItems");
 
@@ -165,7 +158,7 @@ function fetchMarketItems() {
   return data;
 };
 
-function getOwner() { 
+function GetOwner() { 
   const { contract } = useContract(MarketplaceAddress, MarketplaceABI);  
   const { data, isLoading } = useContractRead(contract, "owner");
 
@@ -173,7 +166,7 @@ function getOwner() {
   return data;
 };
 
-function getFee() { 
+function GetFee() { 
   const { contract } = useContract(MarketplaceAddress, MarketplaceABI);  
   const { data, isLoading } = useContractRead(contract, "fee");
 
@@ -182,7 +175,7 @@ function getFee() {
 };
 
 //only Admin
-function getMarketplaceBalance() { 
+function GetMarketplaceBalance() { 
   const { contract } = useContract(MarketplaceAddress, MarketplaceABI);  
   const { data, isLoading } = useContractRead(contract, "getBalance");
 
@@ -225,7 +218,7 @@ function burnNFTButton(tokenID: number) {
 };
 
 
-function getRSBTBalance(address: String) { 
+function GetRSBTBalance(address: String) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
   const { data, isLoading } = useContractRead(contract, "balanceOf", [address]);
 
@@ -233,7 +226,7 @@ function getRSBTBalance(address: String) {
   return data;
 };
 
-function getRSBTURI(tokenID: number) { 
+function GetRSBTURI(tokenID: number) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
   const { data, isLoading } = useContractRead(contract, "tokenURI", [tokenID]);
 
@@ -241,7 +234,7 @@ function getRSBTURI(tokenID: number) {
   return data;
 };
 
-function getSBTsOfAddress(address: String) { 
+function GetSBTsOfAddress(address: String) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
   const { data, isLoading } = useContractRead(contract, "getSBTsOfAddress", [address]);
 
@@ -250,7 +243,7 @@ function getSBTsOfAddress(address: String) {
 };
 
 
-export {MintNFT, balanceOf, getIDsOfAddress, tokenURI, 
-  createMarketItemButton, purchaseItemButton, approveButton, setFeeButton, withdrawBalanceButton,
-  fetchMarketItems, getOwner, getFee, getMarketplaceBalance,
-  approveBurnButton, burnNFTButton, getRSBTBalance, getRSBTURI, getSBTsOfAddress};
+export {MintNFT, BalanceOf, GetIDsOfAddress, 
+  createMarketItemButton, approveButton, setFeeButton, withdrawBalanceButton,
+  FetchMarketItems, GetOwner, GetFee, GetMarketplaceBalance,
+  approveBurnButton, burnNFTButton, GetRSBTBalance, GetRSBTURI, GetSBTsOfAddress};

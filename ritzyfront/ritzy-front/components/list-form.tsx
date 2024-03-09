@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { MintNFT, approveButton, createMarketItemButton, tokenURI } from "./wallet/chainFunctions";
+import { MintNFT, approveButton, createMarketItemButton } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
 import { BigNumber } from "ethers";
 

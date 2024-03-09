@@ -6,10 +6,9 @@ import { CardTitle, CardDescription, CardContent, Card } from "@/components/ui/c
 import { Badge } from "@/components/ui/badge"
 import { Header } from "./ui/header"
 import { useRouter } from 'next/navigation';
-import { fetchMarketItems, getNFTtokenUri } from "./wallet/chainFunctions";
+import { FetchMarketItems, getNFTtokenUri } from "./wallet/chainFunctions";
 import { Web3Button, useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
-import { purchaseItemButton } from "./wallet/chainFunctions";
 import { MarketplaceABI, MarketplaceAddress } from "./wallet/RitzyMarketplace";
 import { NFTAddress } from "./wallet/RitzyNFT";
 import { BigNumber, utils } from "ethers";
@@ -97,7 +96,7 @@ export function Marketplace() {
   const router = useRouter();
   const address = useAddress();
 
-  const data = fetchMarketItems();
+  const data = FetchMarketItems();
 
   const [isLoading, setIsLoading] = useState(true);
   const [NFTs, setNFTs] = useState<MarketplaceItem[]>([]);
@@ -133,7 +132,8 @@ export function Marketplace() {
     }
   }, [NFTs]);
 
-  fetchMarketItems();
+  //TODO Delete??
+  FetchMarketItems();
 
   return (
     <div className="flex flex-col min-h-screen">
