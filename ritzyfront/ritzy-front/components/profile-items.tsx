@@ -14,6 +14,8 @@ export class Nft {
   image!: string;
 }
 
+
+
 export function ProfileItems() {
 
 
@@ -29,6 +31,34 @@ export function ProfileItems() {
     const [idMapUri, setIdMapUri] = useState<Map<number, string>>(new Map());
     const [idMap, setIdMap] = useState<Map<number, Nft>>(new Map());
  
+
+
+    function MapNfts(map: Map<number, Nft>) {
+      return Array.from(map).map(([key, value]) => {
+        return (
+          <Card onClick={
+            (e) => {
+              e.preventDefault();
+              const id = key.toString();
+              clickOnItem(id);
+            }
+          } className="cursor-pointer" key={key}>
+            <img
+              alt="Artwork"
+              className=" object-cover rounded-t-lg"
+              height={200}
+              src={value.image}
+              width={300}
+            />
+            <CardContent className="pb-4">
+              <CardTitle className="text-base font-semibold">{value.name}</CardTitle>
+              <CardDescription className="text-sm">{value.description}</CardDescription>
+            </CardContent>
+          </Card>
+        );
+      });
+    }
+
 
     useEffect(() => {
       const array: string[] = [];
@@ -53,11 +83,16 @@ export function ProfileItems() {
     useEffect(() => {
       if(URIs.length == balance && URIs.length != 0){
         readFromIpfs(idMapUri);
-        setIsLoading(false);
         
       }
-    }, [balance, URIs, idMap]);
+    }, [balance, URIs]);
 
+
+    useEffect(() => {
+      if(Nfts.length == balance && Nfts.length != 0){
+        setIsLoading(false);
+      }
+    }, [Nfts]);
 
     const router = useRouter();
 
@@ -67,6 +102,7 @@ export function ProfileItems() {
 
 
     function readFromIpfs(map: Map<number, string>) {
+      const NftsArray: Nft[] = [];
       map.forEach((uri: string, id: number) => {
         fetch(uri)
           .then(response => response.json())
@@ -76,10 +112,12 @@ export function ProfileItems() {
             nft.description = data.description;
             nft.image = data.image;
             setIdMap(idMap.set(id, nft));
-            console.log(idMap);
+            NftsArray.push(nft);
+            if(NftsArray.length == balance){
+              setNfts(NftsArray);
+            }
           });
       });
-      return Nfts;
     }
 
 
@@ -96,7 +134,8 @@ export function ProfileItems() {
                 <h1 className="font-semibold text-4xl">My Nfts</h1>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              
+               
+                {MapNfts(idMap)}
               </div>
             </div>
           </section>
