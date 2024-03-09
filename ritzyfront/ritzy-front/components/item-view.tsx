@@ -14,6 +14,7 @@ export function ItemView() {
 
   const address = useAddress();
   const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
+  console.log("urlkey" + urlkey);
 
   const router = useRouter();
 

@@ -44,10 +44,11 @@ export function Marketplace() {
           <Card onClick={
             (e) => {
               e.preventDefault();
-              const id = nft.tokenId;
-              clickOnItem(id);
+              const key = nft.tokenId;
+              clickOnItem(key);
+              
             }
-          } className="cursor-pointer">
+          } className="cursor-pointer" key={nft.tokenId}>
             <img
               alt="Artwork"
               className=" object-cover rounded-t-lg"

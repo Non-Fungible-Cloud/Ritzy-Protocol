@@ -223,7 +223,7 @@ export function Landing() {
                 />
                 <div className="space-y-1">
                   <h3 className="text-xl font-bold">Account Abstraction</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Users don't need to worry about wallets, seed phrases or gas. All is covered by Ritzy to foucs on the important things.</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Users do not need to worry about wallets, seed phrases or gas. All is covered by Ritzy to foucs on the important things.</p>
                 </div>
               </div>
             </div>

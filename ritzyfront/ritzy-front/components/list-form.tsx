@@ -7,7 +7,7 @@ import { MintNFT, approveButton, createMarketItemButton, tokenURI } from "./wall
 import { useRouter } from 'next/navigation';
 import { BigNumber } from "ethers";
 
-export default function ListForm(id: number) {
+export default function ListForm() {
 
 
     const [address, setAddress] = useState('');
@@ -25,7 +25,7 @@ export default function ListForm(id: number) {
     }
 
     const getId = () => {
-        console.log("id" + id);
+        console.log("id" + urlkey);
     }
 
     const approveNft = () => {

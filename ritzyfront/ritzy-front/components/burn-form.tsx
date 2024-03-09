@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { get } from "http";
 import { time } from "console";
 
-export default function BurnForm(id: number) {
+export default function BurnForm() {
 
     const [address, setAddress] = useState('');
     const [aprroveBurn, setApproveBurn] = useState(false);
