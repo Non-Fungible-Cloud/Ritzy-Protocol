@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 
 
 export function Header() {
-  const address = useAddress();
-  const disconnect = useDisconnect();
+
+    const address = useAddress();const disconnect = useDisconnect();
 
   const router = useRouter();
 

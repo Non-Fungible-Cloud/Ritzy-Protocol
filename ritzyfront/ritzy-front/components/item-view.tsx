@@ -11,7 +11,7 @@ import { getNFTOwner, getNFTtokenUri } from "./wallet/chainFunctions";
 
 export function ItemView() {
 
-  const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
+
   const address = useAddress();
 
   const router = useRouter();
@@ -21,20 +21,52 @@ export function ItemView() {
     description: '',
     image: '',
     Owner: '',
-    tokenID: urlkey,
+    tokenID: '',
     Creator: ''
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [tokenUri, setTokenUri] = useState('');
+  const [owner, setOwner] = useState('');
+
 
   useEffect(() => {
-    getNFTOwner(urlkey).then((newowner:string) => {
-      setNft({ ...nft, Owner: newowner });
+    const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
+    const tokenUrii = getNFTtokenUri(urlkey).then((uri) => {
+      setTokenUri(uri);
+      console.log("uri: " + uri);
     }
     );
 
-  }, [nft]);
+    const owneri = getNFTOwner(urlkey).then((owner) => {
+      setOwner(owner);
+      console.log("owner" + owner);
+
+    });
+
+  }
+    , [address]);
+
+  useEffect(() => {
+    if (tokenUri != '' && owner != '') {
+      fetch(tokenUri).then((response) => response.json()).then((data) => {
+        console.log(data);
+        setNft({
+          name: data.name,
+          description: data.description,
+          image: data.image,
+          Owner: owner,
+          tokenID: '',
+          Creator: data.creator
+        });
+      });
+      setIsLoading(false);
+    }
+  }, [tokenUri, owner]);
+
+
+
+
 
 
   return (
@@ -115,19 +147,19 @@ export function ItemView() {
           </div>
           <div className="flex flex-col gap-4">
             <Button size="lg" variant="outline"
-            onClick={
-              () => {
-                router.push('/marketplace/{{id}/burn');
-              }
-            
-            }>Claim Physical Item</Button>
+              onClick={
+                () => {
+                  router.push('/marketplace/{{id}/burn');
+                }
+
+              }>Claim Physical Item</Button>
             <Button size="lg" variant="outline">Purchase NFT</Button>
             <Button size="lg" variant="outline"
-            onClick={
-              () => {
-                router.push('/marketplace/{{id}/list');
-              }
-            }>
+              onClick={
+                () => {
+                  router.push('/marketplace/{{id}/list');
+                }
+              }>
               <PlusIcon className="w-4 h-4 mr-2" />
               List NFT for Sale
             </Button>
