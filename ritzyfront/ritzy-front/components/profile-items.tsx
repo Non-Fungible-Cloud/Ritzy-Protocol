@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { Header } from "./ui/header";
 import { useRouter } from 'next/navigation';
 import { useAddress } from "@thirdweb-dev/react";
-import { BalanceOf, GetIDsOfAddress, getNFTOwner, getNFTtokenUri } from "./wallet/chainFunctions";
+import { BalanceOf, GetIDsOfAddress, GetRSBTBalance, GetRSBTURI, GetSBTsOfAddress, getNFTOwner, getNFTtokenUri, getSBTtokenUri } from "./wallet/chainFunctions";
 import { use, useEffect, useState } from "react";
 import { get } from "http";
 
@@ -12,14 +12,14 @@ export class Nft {
   name!: string;
   description!: string;
   image!: string;
+  tokenId?: number;
 }
-
-
 
 export function ProfileItems() {
 
 
     const address = useAddress();
+    
     //const address = "0x4c8f2e1A98397EbD82e780A6e791a0b09202E25c"
     const { data, } = GetIDsOfAddress(address ? address : "");
     const { balance } = BalanceOf(address ? address : "");
@@ -28,6 +28,11 @@ export function ProfileItems() {
     const [isLoadingNfts, setIsLoadingNfts] = useState(true);
     const [URIs, setURIs] = useState<string[]>([]);
     const [Nfts, setNfts] = useState<Nft[]>([]);
+    
+    const [SBTs, setSBTs] = useState<Nft[]>([]);
+    const { sbtdata, isloading2 } = GetSBTsOfAddress(address ? address : "");
+    const { sbtbalance, isLoadingFunction} = GetRSBTBalance(address ? address : "");
+
     const [idMapUri, setIdMapUri] = useState<Map<number, string>>(new Map());
     const [idMap, setIdMap] = useState<Map<number, Nft>>(new Map());
  
@@ -59,13 +64,39 @@ export function ProfileItems() {
       });
     }
 
+    useEffect(() => {
+      const SBTsArray: Nft[] = [];
+      if(sbtdata != undefined && SBTs.length != sbtbalance){
+        sbtdata.forEach((id: number)  => {
+          getSBTtokenUri(id).then((uri) => {
+            console.log(uri);
+            //if uri does not contain http://ipfs.io/ipfs/ then add it
+            if(!uri.includes("http://ipfs.io/ipfs/")){
+              uri = "http://ipfs.io/ipfs/" + uri;
+            }
+            fetch(uri).then(response => response.json()).then(res => {   
+              const sbt = new Nft(); 
+              sbt.tokenId = id;
+              sbt.name = res.name 
+              sbt.description = res.description;
+              sbt.image = res.image;
+              SBTsArray.push(sbt);
+              if(SBTsArray.length == sbtbalance){
+                console.log("Set SBT array")
+                console.log(SBTsArray)
+                setSBTs(SBTsArray);
+              }
+            });
+          });
+      });
+      }
+    }, [sbtdata, sbtbalance]);
 
     useEffect(() => {
       const array: string[] = [];
       if(data != undefined && URIs.length != balance){
         data.forEach((id: number)  => {
           getNFTtokenUri(id).then((newuri:string) => {
-            console.log(id + " " + newuri);
             getNFTOwner(id).then((owner: string) => {
               if(owner == address){
                 array.push(newuri);
@@ -89,7 +120,7 @@ export function ProfileItems() {
 
 
     useEffect(() => {
-      if(Nfts.length == balance && Nfts.length != 0){
+      if(Nfts.length == balance && Nfts.length != 0 && SBTs.length == sbtbalance){
         setIsLoading(false);
       }
     }, [Nfts]);
@@ -120,7 +151,31 @@ export function ProfileItems() {
       });
     }
 
-
+    function MapSBTs(items: Nft[]) {
+      return items.map((nft) => {
+        return (
+          <Card onClick={
+            (e) => {
+              e.preventDefault();
+              const id = nft.tokenId!.toString();
+              clickOnItem(id);
+            }
+          } className="cursor-pointer" key={nft.tokenId!}>
+            <img
+              alt="Artwork"
+              className=" object-cover rounded-t-lg"
+              height={200}
+              src={nft.image}
+              width={300}
+            />
+            <CardContent className="pb-4 mt-5">
+              <CardTitle className="text-base font-semibold">{nft.name}</CardTitle>
+              <CardDescription className="text-sm">{nft.description}</CardDescription>
+            </CardContent>
+          </Card>
+        );
+      });
+    }
     
 
     return (
@@ -145,7 +200,9 @@ export function ProfileItems() {
                  <h1 className="font-semibold text-4xl">My Sbts</h1>
                </div>
                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-               <Card onClick={
+
+               {MapSBTs(SBTs)}
+               {/* <Card onClick={
                    (e) => {
                      e.preventDefault();
                      const id = '1';
@@ -167,7 +224,7 @@ export function ProfileItems() {
                        <div className="font-semibold">0.3 CFX</div>
                      </div>
                    </CardContent>
-                 </Card>
+                 </Card> */}
    
                </div>
              </div>

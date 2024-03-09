@@ -221,9 +221,9 @@ function burnNFTButton(tokenID: number) {
 function GetRSBTBalance(address: String) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
   const { data, isLoading } = useContractRead(contract, "balanceOf", [address]);
-
-  console.log(data);
-  return data;
+  const isLoadingFunction = isLoading;
+  const sbtbalance = data;
+  return {sbtbalance, isLoadingFunction};
 };
 
 function GetRSBTURI(tokenID: number) { 
@@ -234,12 +234,23 @@ function GetRSBTURI(tokenID: number) {
   return data;
 };
 
+export async function getSBTtokenUri(id: number): Promise<any> {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const contract = new ethers.Contract(
+    BurnAddress,
+    BurnABI,
+    provider.getSigner()
+  );
+  const uri = contract.tokenURI(id);
+  return uri;
+}
+
 function GetSBTsOfAddress(address: String) { 
   const { contract } = useContract(BurnAddress, BurnABI);  
   const { data, isLoading } = useContractRead(contract, "getSBTsOfAddress", [address]);
-
-  console.log(data);
-  return data;
+  const sbtdata = data;
+  const isloading2 = isLoading;
+  return {sbtdata, isloading2};
 };
 
 
