@@ -1,9 +1,9 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { MintNFT, burnNFTButton, approveBurnButton } from "./wallet/chainFunctions";
+import { MintNFT, burnNFTButton, approveBurnButton, getNFTtokenUri } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
 import { get } from "http";
 import { time } from "console";
@@ -12,18 +12,17 @@ export default function BurnForm(id: number) {
 
     const [address, setAddress] = useState('');
     const [aprroveBurn, setApproveBurn] = useState(false);
+    const urlkey: number = (window.location.href.split('/').at(4) as unknown as number);
+    console.log("urlkey" + urlkey);
 
     const handleSubmit = () => {
         console.log(address);
         console.log('submitted');
     }
 
-    const getId = () => {
-        console.log("id" + id);
-    }
 
     const approveBurnNft = () => {
-        return approveBurnButton(1);
+        return approveBurnButton(urlkey);
     }
 
 
@@ -36,7 +35,7 @@ export default function BurnForm(id: number) {
 
     const burnNFT = () => {
 
-        return burnNFTButton(1);
+        return burnNFTButton(urlkey);
     }
 
 

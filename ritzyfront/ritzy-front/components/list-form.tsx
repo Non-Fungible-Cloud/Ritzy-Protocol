@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { MintNFT, approveButton, createMarketItemButton } from "./wallet/chainFunctions";
+import { MintNFT, approveButton, createMarketItemButton, tokenURI } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
 import { BigNumber } from "ethers";
 
@@ -13,6 +13,11 @@ export default function ListForm(id: number) {
     const [address, setAddress] = useState('');
     const [price, setPrice] = useState('');
     const [aprroveList, setApproveList] = useState(false);
+
+    const urlkey: number = (window.location.href.split('/').at(4) as unknown as number);
+    console.log("urlkey" + urlkey);
+
+
 
     const handleSubmit = () => {
         console.log(address);
@@ -24,7 +29,7 @@ export default function ListForm(id: number) {
     }
 
     const approveNft = () => {
-        return approveButton(3);
+        return approveButton(urlkey);
     }
 
 
@@ -39,7 +44,7 @@ export default function ListForm(id: number) {
 
         const convertedPrice = BigNumber.from(Number(price)).mul(10).pow(18);
         console.log(convertedPrice);
-        return createMarketItemButton(3, convertedPrice);
+        return createMarketItemButton(urlkey, convertedPrice);
     }
 
 
