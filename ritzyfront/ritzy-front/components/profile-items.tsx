@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { Header } from "./ui/header";
 import { useRouter } from 'next/navigation';
 import { useAddress } from "@thirdweb-dev/react";
-import { balanceOf, getIDsOfAddress, getNFTtokenUri, tokenURI } from "./wallet/chainFunctions";
+import { balanceOf, getIDsOfAddress, getNFTOwner, getNFTtokenUri, tokenURI } from "./wallet/chainFunctions";
 import { use, useEffect, useState } from "react";
 import { get } from "http";
 
@@ -17,16 +17,22 @@ export function ProfileItems() {
     
     const [isLoading, setIsLoading] = useState(true);
     const [URIs, setURIs] = useState<string[]>([]);
+    const [Nfts, setNfts] = useState([]);
 
     useEffect(() => {
       const array: string[] = [];
-      if(data != undefined && data.length == balance && URIs.length != balance){
+      if(data != undefined && URIs.length != balance){
         data.forEach((id: number)  => {
           getNFTtokenUri(id).then((newuri:string) => {
-            array.push(newuri);
-            if(array.length == balance){
-              setURIs(array);
-            }
+            console.log(id + " " + newuri);
+            getNFTOwner(id).then((owner: string) => {
+              if(owner == address){
+                array.push(newuri);
+                if(array.length == balance){
+                  setURIs(array);
+                }
+              }
+            });              
           });
       });
       }
@@ -35,6 +41,8 @@ export function ProfileItems() {
     useEffect(() => {
       if(URIs.length == balance && URIs.length != 0){
         setIsLoading(false);
+
+        readFromIpfs(URIs);
       }
     }, [balance, URIs]);
 
@@ -43,6 +51,23 @@ export function ProfileItems() {
     function clickOnItem(id:string) {
         router.push('/marketplace/'+ id);
     }
+
+
+    function readFromIpfs(uris: string[]) {
+      uris.forEach((uri: string) => {
+        fetch(uri).then(response => response.json())
+        .then(data => {
+          setNfts(data);
+          console.log(data);
+        });
+      });
+    }
+
+    
+
+
+
+    
 
     return (
         <div className="flex flex-col min-h-screen">

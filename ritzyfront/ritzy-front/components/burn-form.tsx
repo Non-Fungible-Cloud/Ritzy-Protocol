@@ -30,13 +30,13 @@ export default function BurnForm(id: number) {
     function showBurnButton() {
         setTimeout(() => {
             document.getElementById("burnNFT")!.style.display = "block";
-            document.getElementById("approveBurn")!.style.display = "hide";
+            document.getElementById("approveBurn")!.style.display = "hidden";
         }, 20000);
     }
 
     const burnNFT = () => {
 
-        return burnNFTButton(id);
+        return burnNFTButton(1);
     }
 
 
