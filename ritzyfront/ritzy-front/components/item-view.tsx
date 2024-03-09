@@ -81,18 +81,13 @@ export function ItemView() {
               alt="NFT Image"
               className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800 "
               height={600}
-              src="/images/ferraridrop.jpg"
+              src={nft.image}
               width={600}
             />
             <div className="grid gap-2">
-              <h1 className="font-semibold text-2xl">Glimmer Lamps</h1>
+              <h1 className="font-semibold text-2xl">{nft.name}</h1>
               <p className="text-sm leading-normal">
-                Glimmer Lamps are the perfect addition to any room, emitting a soft and warm light that creates a cozy
-                atmosphere. These handcrafted lamps are made with care and attention to detail, ensuring that each one is
-                a unique work of art. The base of the lamp is made from sustainably sourced wood, adding a natural and
-                organic touch to the design. The lampshade is adorned with delicate crystals that catch the light,
-                creating a beautiful shimmering effect. Whether you're looking to add a touch of elegance to your home or
-                searching for the perfect gift, Glimmer Lamps are sure to impress.
+                {nft.description}
               </p>
             </div>
           </div>
@@ -101,29 +96,17 @@ export function ItemView() {
             <dl className="grid gap-2 text-sm">
               <div className="grid grid-cols-2 items-start">
                 <dt className="font-medium">Creator</dt>
-                <dd className="text-sm font-normal">Artisan Designs</dd>
+                <dd className="text-sm font-normal">{nft.Creator}</dd>
               </div>
               <div className="grid grid-cols-2 items-start">
                 <dt className="font-medium">Token ID</dt>
-                <dd className="text-sm font-normal">0x4b3f2c3a6b4c</dd>
-              </div>
-              <div className="grid grid-cols-2 items-start">
-                <dt className="font-medium">Contract Address</dt>
-                <dd className="text-sm font-normal">0x495f947276749ce646f68ac8c248420045cb7b5e</dd>
+                <dd className="text-sm font-normal">{nft.tokenID}</dd>
               </div>
             </dl>
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <div className="grid gap-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Price</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-2">
-                <div className="font-semibold text-2xl">0.05 CFX</div>
-              </CardContent>
-            </Card>
             <Card>
               <CardHeader>
                 <CardTitle>Owner</CardTitle>
@@ -141,7 +124,7 @@ export function ItemView() {
                   }}
                   width="32"
                 />
-                <div className="text-sm font-medium">CryptoCollector123</div>
+                <div className="text-sm font-medium">{nft.Owner.slice(0, 6)}...{nft.Owner.slice(nft.Owner.length - 4,nft.Owner.length) }</div>
               </CardContent>
             </Card>
           </div>
@@ -149,15 +132,14 @@ export function ItemView() {
             <Button size="lg" variant="outline"
               onClick={
                 () => {
-                  router.push('/marketplace/{{id}/burn');
+                  router.push('/marketplace/'+ nft.tokenID+'/burn');
                 }
 
               }>Claim Physical Item</Button>
-            <Button size="lg" variant="outline">Purchase NFT</Button>
             <Button size="lg" variant="outline"
               onClick={
                 () => {
-                  router.push('/marketplace/{{id}/list');
+                  router.push('/marketplace/'+ nft.tokenID+'/list');
                 }
               }>
               <PlusIcon className="w-4 h-4 mr-2" />
