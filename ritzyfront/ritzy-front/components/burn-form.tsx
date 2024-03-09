@@ -1,11 +1,44 @@
 'use client'
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { MintNFT } from "./wallet/chainFunctions";
+import { MintNFT, burnNFTButton, approveBurnButton } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
+import { get } from "http";
+import { time } from "console";
 
-export default function BurnForm() {
+export default function BurnForm(id: number) {
+
+    const [address, setAddress] = useState('');
+    const [aprroveBurn, setApproveBurn] = useState(false);
+
+    const handleSubmit = () => {
+        console.log(address);
+        console.log('submitted');
+    }
+
+    const getId = () => {
+        console.log("id" + id);
+    }
+
+    const approveBurnNft = () => {
+        return approveBurnButton(1);
+    }
+
+
+    function showBurnButton() {
+        setTimeout(() => {
+            document.getElementById("burnNFT")!.style.display = "block";
+            document.getElementById("approveBurn")!.style.display = "hide";
+        }, 20000);
+    }
+
+    const burnNFT = () => {
+
+        return burnNFTButton(id);
+    }
+
 
     const router = useRouter();
     return (
@@ -15,12 +48,12 @@ export default function BurnForm() {
                     <CardDescription>Enter your collection information</CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-start">
-                    <form className="grid gap-4 w-full md:gap-6">
+                    <div className="grid gap-4 w-full md:gap-6">
                         <div className="grid gap-2">
                             <label className="text-base">
                                 Address
                             </label>
-                            <Input id="name" placeholder="Street postal code region country" />
+                            <Input id="name" placeholder="Street postal code region country" value={address} onChange={(e)=> setAddress(e.target.value)} />
                         </div>
                         <div className="gap-2 flex-row">
                         
@@ -29,15 +62,13 @@ export default function BurnForm() {
                                 Are you sure you want to claim this NFT? You will not be able to undo this action. You will receive a SBT and the physical product in 2 weeks.
                             </label>
                         </div>
-                        <Button size="lg" variant="outline" 
-                        onClick={
-                            (e) => {
-                                e.preventDefault();
-                                router.push('/marketplace/profile');
-                            }
-                        
-                        }>Claim</Button>
-                    </form>
+                        <div onClick={showBurnButton} id="approveBurn" className="block">
+                            {approveBurnNft()}
+                        </div>
+                        <div id="burnNFT" className="hidden">
+                            {burnNFT()}
+                        </div>
+                    </div>
                 </CardContent>
             </Card>
     );

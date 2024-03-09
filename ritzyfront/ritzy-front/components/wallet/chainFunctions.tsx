@@ -186,7 +186,7 @@ function getMarketplaceBalance() {
  *                            * 
  *                            */
 //Prior burning the NFT, we have to approve the transfer, make 2 transactions
-function approveBurnButton(tokenID: string) { 
+function approveBurnButton(tokenID: number) { 
     
   return (
   <Web3Button
