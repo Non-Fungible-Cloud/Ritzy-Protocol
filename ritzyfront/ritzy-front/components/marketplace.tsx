@@ -41,14 +41,15 @@ export function Marketplace() {
     return items.map((nft) => {
       return (
 
-          <Card onClick={
+          <Card className="cursor-pointer" key={nft.tokenId}>
+            <div onClick={
             (e) => {
               e.preventDefault();
               const key = nft.tokenId;
               clickOnItem(key);
               
             }
-          } className="cursor-pointer" key={nft.tokenId}>
+          }>
             <img
               alt="Artwork"
               className=" object-cover rounded-t-lg"
@@ -56,14 +57,18 @@ export function Marketplace() {
               src={nft.image}
               width={300}
             />
-            <CardContent className="pb-4 mt-5">
+            <CardContent className="pb-1 mt-5">
               <CardTitle className="text-base font-semibold">{nft.name} </CardTitle>
               <CardDescription className="text-sm">{nft.description}</CardDescription>
               <div className="flex flex-col items-center m-auto gap-2">
               <div className="flex items-center gap-2">
-                <div className="font-semibold text-xl">{nft.price} CFX</div>
+                <div className="font-semibold text-xl p-2">{nft.price} CFX</div>
               </div>
-              <Web3Button
+                </div>
+            </CardContent>
+            </div>
+            <div className="flex flex-col items-center m-auto gap-2 p-4">
+            <Web3Button
                 contractAddress={MarketplaceAddress}
                 contractAbi={MarketplaceABI}
                 // Call the name of your smart contract function
@@ -83,8 +88,7 @@ export function Marketplace() {
               >
                 Purchase Item
               </Web3Button>
-                </div>
-            </CardContent>
+            </div>
           </Card>
       );
     });

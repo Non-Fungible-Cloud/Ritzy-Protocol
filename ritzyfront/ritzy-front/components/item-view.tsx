@@ -13,8 +13,7 @@ export function ItemView() {
 
 
   const address = useAddress();
-  const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
-  console.log("urlkey" + urlkey);
+
 
   const router = useRouter();
 
@@ -30,9 +29,13 @@ export function ItemView() {
   const [isLoading, setIsLoading] = useState(true);
   const [tokenUri, setTokenUri] = useState('');
   const [owner, setOwner] = useState('');
+  const [urlkey, setUrlkey] = useState('');
 
 
   useEffect(() => {
+    const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
+    console.log("urlkey" + urlkey);
+    setUrlkey(urlkey.toString());
     const tokenUrii = getNFTtokenUri(urlkey).then((uri) => {
       setTokenUri(uri);
       console.log("uri: " + uri);
