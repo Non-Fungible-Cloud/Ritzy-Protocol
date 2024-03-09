@@ -132,7 +132,7 @@ export function Marketplace() {
     }
   }, [NFTs]);
 
-  //TODO Delete??
+
   FetchMarketItems();
 
   return (
@@ -144,7 +144,11 @@ export function Marketplace() {
               <h1 className="font-semibold text-4xl">Featured Collections</h1>
             </div>
             <div className="grid mt-4 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {!isLoading ? (<>{MapNfts(NFTs)}</>) : (<></>)}
+              {!isLoading ? (<>{MapNfts(NFTs)}</>) : (<>
+              
+              Please connect your wallet
+
+              </>)}
             </div>
         </section>
       </main>

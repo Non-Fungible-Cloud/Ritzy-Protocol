@@ -12,15 +12,15 @@ import { BigNumber, ethers, utils } from "ethers";
  *                            * 
  *                            */
 
-const MintNFT = () => {
+const MintNFT = (owner: string, objecturi:string) => {
   return (
     <Web3Button
       contractAddress={NFTAddress}
       contractAbi={NFTABI}
       // Call the name of your smart contract function
-      action={(contract) => contract.call("mintNFT", ["0xfdC91d0fFd95ECD7F84Bd9986befAE5BF5d7020c", "https://ipfs.io/ipfs/QmUFbUjAifv9GwJo7ufTB5sccnrNqELhDMafoEmZdPPng7"])}
+      action={(contract) => contract.call("mintNFT", [owner, objecturi])}
     >
-      Mint Rifty NFT
+      Mint Ritzy NFT
     </Web3Button>
   );
 };
