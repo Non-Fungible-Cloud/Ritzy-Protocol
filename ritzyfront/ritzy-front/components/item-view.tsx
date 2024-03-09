@@ -13,6 +13,7 @@ export function ItemView() {
 
 
   const address = useAddress();
+  const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
 
   const router = useRouter();
 
@@ -31,7 +32,6 @@ export function ItemView() {
 
 
   useEffect(() => {
-    const urlkey: number = (window.location.href.split('/').pop() as unknown as number);
     const tokenUrii = getNFTtokenUri(urlkey).then((uri) => {
       setTokenUri(uri);
       console.log("uri: " + uri);
@@ -56,7 +56,7 @@ export function ItemView() {
           description: data.description,
           image: data.image,
           Owner: owner,
-          tokenID: '',
+          tokenID: urlkey.toString(),
           Creator: data.creator
         });
       });
@@ -140,14 +140,14 @@ export function ItemView() {
                           <Button size="lg" variant="outline"
                           onClick={
                             () => {
-                              router.push('/marketplace/'+ nft.tokenID+'/burn');
+                              router.push('/marketplace/'+ urlkey+'/burn');
                             }
             
                           }>Claim Physical Item</Button>
                         <Button size="lg" variant="outline"
                           onClick={
                             () => {
-                              router.push('/marketplace/'+ nft.tokenID+'/list');
+                              router.push('/marketplace/'+ urlkey+'/list');
                             }
                           }>
                           <PlusIcon className="w-4 h-4 mr-2" />

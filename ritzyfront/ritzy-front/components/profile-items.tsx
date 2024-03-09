@@ -50,7 +50,7 @@ export function ProfileItems() {
               src={value.image}
               width={300}
             />
-            <CardContent className="pb-4">
+            <CardContent className="pb-4 mt-5">
               <CardTitle className="text-base font-semibold">{value.name}</CardTitle>
               <CardDescription className="text-sm">{value.description}</CardDescription>
             </CardContent>
