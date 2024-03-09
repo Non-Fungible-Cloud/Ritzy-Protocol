@@ -66,6 +66,12 @@ export function ItemView() {
 
 
 
+  function isOwner() {
+    if (address == owner) {
+      return true;
+    }
+    return false;
+  }
 
 
 
@@ -128,24 +134,29 @@ export function ItemView() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex flex-col gap-4">
-            <Button size="lg" variant="outline"
-              onClick={
-                () => {
-                  router.push('/marketplace/'+ nft.tokenID+'/burn');
-                }
 
-              }>Claim Physical Item</Button>
-            <Button size="lg" variant="outline"
-              onClick={
-                () => {
-                  router.push('/marketplace/'+ nft.tokenID+'/list');
-                }
-              }>
-              <PlusIcon className="w-4 h-4 mr-2" />
-              List NFT for Sale
-            </Button>
-          </div>
+            {isOwner() ?
+                      <div className="flex flex-col gap-4">
+                          <Button size="lg" variant="outline"
+                          onClick={
+                            () => {
+                              router.push('/marketplace/'+ nft.tokenID+'/burn');
+                            }
+            
+                          }>Claim Physical Item</Button>
+                        <Button size="lg" variant="outline"
+                          onClick={
+                            () => {
+                              router.push('/marketplace/'+ nft.tokenID+'/list');
+                            }
+                          }>
+                          <PlusIcon className="w-4 h-4 mr-2" />
+                          List NFT for Sale
+                        </Button>
+                      </div>
+              : <div></div>
+            }
+
 
         </div>
       </div>
