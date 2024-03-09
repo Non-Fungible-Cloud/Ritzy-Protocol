@@ -1,11 +1,44 @@
 'use client'
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { MintNFT } from "./wallet/chainFunctions";
+import { MintNFT, approveButton, createMarketItemButton } from "./wallet/chainFunctions";
 import { useRouter } from 'next/navigation';
 
-export default function ListForm() {
+export default function ListForm(id: number) {
+
+
+    const [address, setAddress] = useState('');
+    const [price, setPrice] = useState('');
+    const [aprroveList, setApproveList] = useState(false);
+
+    const handleSubmit = () => {
+        console.log(address);
+        console.log('submitted');
+    }
+
+    const getId = () => {
+        console.log("id" + id);
+    }
+
+    const approveNft = () => {
+        return approveButton(2);
+    }
+
+
+    function showListButton() {
+        setTimeout(() => {
+            document.getElementById("listNFT")!.style.display = "block";
+            document.getElementById("approve")!.style.display = "hidden";
+        }, 20000);
+    }
+
+    const listNFT = (price:string) => {
+
+        return createMarketItemButton(2, Number(price));
+    }
+
 
     const router = useRouter();
 
@@ -17,12 +50,12 @@ export default function ListForm() {
                     <CardDescription>Enter your listing information</CardDescription>
                 </CardHeader>
                 <CardContent className="flex items-start">
-                    <form className="grid gap-4 w-full md:gap-6">
+                    <div className="grid gap-4 w-full md:gap-6">
                         <div className="grid gap-2">
                             <label className="text-base">
                                 Price (CFX)
                             </label>
-                            <Input id="name" placeholder="100" />
+                            <Input id="price" placeholder="100" value={price} onChange={e => setPrice(e.target.value)} />
                         </div>
                         <Button size="lg" variant="outline"
                         onClick={
@@ -31,7 +64,15 @@ export default function ListForm() {
                                 router.push('/marketplace/');
                             }
                         }>List</Button>
-                    </form>
+                        <div onClick={showListButton} id="approve" className="block">
+                            {approveNft()}
+                        </div>
+                        <div id="listNFT" className="hidden" 
+                            onClick={() => router.push('/marketplace/')}
+                        >
+                            {listNFT(price)}
+                        </div>
+                    </div>
                 </CardContent>
             </Card>
     );

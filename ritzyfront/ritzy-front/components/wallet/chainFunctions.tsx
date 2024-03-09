@@ -76,7 +76,7 @@ export async function getNFTOwner(id: number): Promise<any> {
  *                            */
 
 // Before createMarketItem, we have to approve the transfer, make 2 transactions
-function approveButton(tokenID: string) { 
+function approveButton(tokenID: number) { 
     
   return (
   <Web3Button

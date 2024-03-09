@@ -65,7 +65,8 @@ export default function BurnForm(id: number) {
                         <div onClick={showBurnButton} id="approveBurn" className="block">
                             {approveBurnNft()}
                         </div>
-                        <div id="burnNFT" className="hidden">
+                        <div id="burnNFT" className="hidden"                             
+                        onClick={() => router.push('marketplace/profile/')}>
                             {burnNFT()}
                         </div>
                     </div>
