@@ -6,16 +6,101 @@ import { CardTitle, CardDescription, CardContent, Card } from "@/components/ui/c
 import { Badge } from "@/components/ui/badge"
 import { Header } from "./ui/header"
 import { useRouter } from 'next/navigation';
-import { fetchMarketItems } from "./wallet/chainFunctions";
+import { fetchMarketItems, getNFTtokenUri } from "./wallet/chainFunctions";
+import { useAddress } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
 
+
+export class MarketplaceItem {
+  itemId!: number;
+  tokenId!: number;
+  price!: number;
+  tokenUri?: string;
+  name!: string;
+  description!: string;
+  image!: string;
+}
 
 export function Marketplace() {
 
-  const router = useRouter();
-
-  function clickOnItem(id:string) {
+  function clickOnItem(id:number) {
     router.push('/marketplace/'+ id);
+}
+
+  function MapNfts(items: MarketplaceItem[]) {
+    return items.map((nft) => {
+      return (
+        <Card onClick={
+          (e) => {
+            e.preventDefault();
+            const id = nft.tokenId;
+            clickOnItem(id);
+          }
+        } className="cursor-pointer">
+          <img
+            alt="Artwork"
+            className=" object-cover rounded-t-lg"
+            height={200}
+            src={nft.image}
+            width={300}
+          />
+          <CardContent className="pb-4">
+            <CardTitle className="text-base font-semibold">{nft.name} </CardTitle>
+            <CardDescription className="text-sm">{nft.description}</CardDescription>
+            <div className="flex items-center gap-2">
+              <div className="font-semibold">CFX</div>
+            </div>
+          </CardContent>
+        </Card>
+      );
+    });
   }
+  
+  const router = useRouter();
+  const address = useAddress();
+
+  const  data = fetchMarketItems();
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [NFTs, setNFTs] = useState<MarketplaceItem[]>([]);
+
+  useEffect(() => {
+    const NFTarray: MarketplaceItem[] = [];
+    if(data != undefined){
+      data.forEach((item: MarketplaceItem)  => {
+        const NFT:MarketplaceItem = new MarketplaceItem();
+        NFT.itemId = item.itemId;
+        NFT.price = item.price;
+        NFT.tokenId = item.tokenId; 
+        getNFTtokenUri(item.tokenId).then((uri:string) => {
+          console.log("uriii "+ uri)
+          NFT.tokenUri = uri;
+          fetch(uri).then(response => response.json()).then((res) => {
+            console.log(res);
+            NFT.name = res.name;
+            console.log("name "+ NFT.name)
+            NFT.description = res.description;
+            NFT.image = res.image;
+            NFTarray.push(NFT);
+            console.log("added item")
+            console.log(NFTarray.length + " " + data.length)
+            if(NFTarray.length == data.length){
+              setNFTs(NFTarray);
+            }
+          });          
+        });
+  
+    });
+    }
+  }, [data]);
+
+    useEffect(() => {
+      if(NFTs.length != 0){
+        console.log("our nfts ");
+        console.log(NFTs);
+        setIsLoading(false);
+      }
+    }, [NFTs]);
   
   fetchMarketItems();
 
@@ -29,103 +114,7 @@ export function Marketplace() {
               <h1 className="font-semibold text-4xl">Featured Collections</h1>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/winedrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
-                  <CardDescription className="text-sm">Bodegas Campos</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.05 CFX</div>
-                    <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">100</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/ferraridrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Ferrari ToroNegro</CardTitle>
-                  <CardDescription className="text-sm">Ferrari</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">100 CFX</div>
-                    <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">5</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/watchdrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Super Watch</CardTitle>
-                  <CardDescription className="text-sm">
-                    Ethereum Foundation X Rolex
-                  </CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">2 CFX</div>
-                    <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">50</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/raquetdrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Racket Nadal</CardTitle>
-                  <CardDescription className="text-sm">Rafael Nadal</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.1 CFX</div>
-                    <Badge className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full">1000</Badge>
-                  </div>
-                </CardContent>
-              </Card>
+              {!isLoading ? (<>{MapNfts(NFTs)}</>) : (<></>)}
             </div>
           </div>
         </section>
@@ -244,5 +233,3 @@ export function Marketplace() {
     </div>
   )
 }
-
-
