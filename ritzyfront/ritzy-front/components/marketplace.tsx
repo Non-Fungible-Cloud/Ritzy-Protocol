@@ -7,8 +7,12 @@ import { Badge } from "@/components/ui/badge"
 import { Header } from "./ui/header"
 import { useRouter } from 'next/navigation';
 import { fetchMarketItems, getNFTtokenUri } from "./wallet/chainFunctions";
-import { useAddress } from "@thirdweb-dev/react";
+import { Web3Button, useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
 import { useEffect, useState } from "react";
+import { purchaseItemButton } from "./wallet/chainFunctions";
+import { MarketplaceABI, MarketplaceAddress } from "./wallet/RitzyMarketplace";
+import { NFTAddress } from "./wallet/RitzyNFT";
+import { BigNumber, utils } from "ethers";
 
 
 export class MarketplaceItem {
@@ -23,6 +27,12 @@ export class MarketplaceItem {
 
 export function Marketplace() {
 
+  const { contract } = useContract(MarketplaceAddress, MarketplaceABI);
+  const { mutateAsync, error } = useContractWrite(
+    contract,
+    "createMarketSale",
+  );
+
   function clickOnItem(id:number) {
     router.push('/marketplace/'+ id);
 }
@@ -30,6 +40,7 @@ export function Marketplace() {
   function MapNfts(items: MarketplaceItem[]) {
     return items.map((nft) => {
       return (
+        <>
         <Card onClick={
           (e) => {
             e.preventDefault();
@@ -48,10 +59,30 @@ export function Marketplace() {
             <CardTitle className="text-base font-semibold">{nft.name} </CardTitle>
             <CardDescription className="text-sm">{nft.description}</CardDescription>
             <div className="flex items-center gap-2">
-              <div className="font-semibold">CFX</div>
+              <div className="font-semibold">{nft.price} CFX</div>
             </div>
           </CardContent>
         </Card>
+        <Web3Button
+        contractAddress={MarketplaceAddress}
+        contractAbi={MarketplaceABI}
+        // Call the name of your smart contract function
+        action={() => {
+          const newprice = BigNumber.from(nft.price).mul(10).pow(18)
+          console.log("cuesta tanto " + newprice)
+
+          mutateAsync({
+            args: [NFTAddress, nft.tokenId],
+            overrides: {
+              gasLimit: 1000000, // override default gas limit
+              value: nft.price,
+            },
+          })}
+        }
+      >
+        Purchase Item
+      </Web3Button>
+      </>
       );
     });
   }
@@ -70,20 +101,15 @@ export function Marketplace() {
       data.forEach((item: MarketplaceItem)  => {
         const NFT:MarketplaceItem = new MarketplaceItem();
         NFT.itemId = item.itemId;
-        NFT.price = item.price;
+        NFT.price = (item.price/1000000000000000000);
         NFT.tokenId = item.tokenId; 
         getNFTtokenUri(item.tokenId).then((uri:string) => {
-          console.log("uriii "+ uri)
           NFT.tokenUri = uri;
           fetch(uri).then(response => response.json()).then((res) => {
-            console.log(res);
             NFT.name = res.name;
-            console.log("name "+ NFT.name)
             NFT.description = res.description;
             NFT.image = res.image;
             NFTarray.push(NFT);
-            console.log("added item")
-            console.log(NFTarray.length + " " + data.length)
             if(NFTarray.length == data.length){
               setNFTs(NFTarray);
             }
@@ -96,8 +122,6 @@ export function Marketplace() {
 
     useEffect(() => {
       if(NFTs.length != 0){
-        console.log("our nfts ");
-        console.log(NFTs);
         setIsLoading(false);
       }
     }, [NFTs]);
@@ -115,106 +139,6 @@ export function Marketplace() {
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {!isLoading ? (<>{MapNfts(NFTs)}</>) : (<></>)}
-            </div>
-          </div>
-        </section>
-        <section className="grid gap-4">
-          <div className="grid gap-4">
-            <div className="grid items-center gap-2">
-              <h1 className="font-semibold text-4xl">User Posted</h1>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/raquetdrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Racket Nadal</CardTitle>
-                  <CardDescription className="text-sm">Rafael Nadal</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.3 CFX</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/winedrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
-                  <CardDescription className="text-sm">Bodegas Campos</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.041 CFX</div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/winedrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
-                  <CardDescription className="text-sm">Bodegas Campos</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.04 CFX</div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card onClick={
-                (e) => {
-                  e.preventDefault();
-                  const id = '1';
-                  clickOnItem(id);
-                }
-              } className="cursor-pointer">
-                <img
-                  alt="Artwork"
-                  className=" object-cover rounded-t-lg"
-                  height={200}
-                  src="/images/winedrop.jpg"
-                  width={300}
-                />
-                <CardContent className="pb-4">
-                  <CardTitle className="text-base font-semibold">Vino Tinto </CardTitle>
-                  <CardDescription className="text-sm">Bodegas Campos</CardDescription>
-                  <div className="flex items-center gap-2">
-                    <div className="font-semibold">0.045 CFX</div>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </section>

@@ -1,5 +1,59 @@
-export const MarketplaceAddress = "0x094d5B89e3F68C279b4f08908aC0260baadA6e1D";
+export const MarketplaceAddress = "0x3E89658Dfb83210EaB13085360E58275786E6d32";
 export const MarketplaceABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "nftContract",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			}
+		],
+		"name": "createMarketItem",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "nftContract",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "itemId",
+				"type": "uint256"
+			}
+		],
+		"name": "createMarketSale",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "setFee",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"inputs": [
 			{
@@ -61,45 +115,15 @@ export const MarketplaceABI = [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "nftContract",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "price",
-				"type": "uint256"
-			}
-		],
-		"name": "createMarketItem",
+		"inputs": [],
+		"name": "withdrawETH",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "nftContract",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "itemId",
-				"type": "uint256"
-			}
-		],
-		"name": "createMarketSale",
-		"outputs": [],
 		"stateMutability": "payable",
-		"type": "function"
+		"type": "receive"
 	},
 	{
 		"inputs": [],
@@ -189,29 +213,5 @@ export const MarketplaceABI = [
 		],
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_fee",
-				"type": "uint256"
-			}
-		],
-		"name": "setFee",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "withdrawETH",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"stateMutability": "payable",
-		"type": "receive"
 	}
 ]
