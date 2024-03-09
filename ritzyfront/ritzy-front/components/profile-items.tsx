@@ -71,8 +71,8 @@ export function ProfileItems() {
           getSBTtokenUri(id).then((uri) => {
             console.log(uri);
             //if uri does not contain http://ipfs.io/ipfs/ then add it
-            if(!uri.includes("http://ipfs.io/ipfs/")){
-              uri = "http://ipfs.io/ipfs/" + uri;
+            if(!uri.includes("https://ipfs.io/ipfs/")){
+              uri = "https://ipfs.io/ipfs/" + uri;
             }
             fetch(uri).then(response => response.json()).then(res => {   
               const sbt = new Nft(); 
@@ -123,7 +123,7 @@ export function ProfileItems() {
       console.log(Nfts.length + " " + balance + " " + SBTs.length + " " + sbtbalance)
       if(Nfts.length == balance && Nfts.length != 0 && SBTs.length == sbtbalance){
         setIsLoading(false);
-        console.log("Set loading to false")
+        console.log("Set loading to false");
       }
     }, [Nfts, balance, SBTs, sbtbalance]);
 
