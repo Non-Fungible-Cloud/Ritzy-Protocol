@@ -23,8 +23,12 @@ export function ProfileItems() {
     const { balance } = balanceOf(address ? address : "");
     
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingNfts, setIsLoadingNfts] = useState(true);
     const [URIs, setURIs] = useState<string[]>([]);
     const [Nfts, setNfts] = useState<Nft[]>([]);
+    const [idMapUri, setIdMapUri] = useState<Map<number, string>>(new Map());
+    const [idMap, setIdMap] = useState<Map<number, Nft>>(new Map());
+ 
 
     useEffect(() => {
       const array: string[] = [];
@@ -35,6 +39,7 @@ export function ProfileItems() {
             getNFTOwner(id).then((owner: string) => {
               if(owner == address){
                 array.push(newuri);
+                setIdMapUri(idMapUri.set(Number(id), newuri));
                 if(array.length == balance){
                   setURIs(array);
                 }
@@ -47,19 +52,12 @@ export function ProfileItems() {
 
     useEffect(() => {
       if(URIs.length == balance && URIs.length != 0){
-        readFromIpfs(URIs);
-
-      }
-    }, [balance, URIs]);
-
-
-    useEffect(() => {
-      console.log(Nfts.length);
-      if(Nfts.length == balance && Nfts.length != 0){
-        console.log("hola");
+        readFromIpfs(idMapUri);
         setIsLoading(false);
+        
       }
-    }, [balance, Nfts]);
+    }, [balance, URIs, idMap]);
+
 
     const router = useRouter();
 
@@ -68,51 +66,20 @@ export function ProfileItems() {
     }
 
 
-    function readFromIpfs(uris: string[]) {
-      const nftslist: Nft[] = [];
-      uris.forEach((uri: string) => {
-        fetch(uri).then(response => response.json())
-        .then(data => {
-          const nft = new Nft();
-          nft.name = data.name;
-          nft.description = data.description;
-          nft.image = data.image;
-          nftslist.push(nft);
-        });
+    function readFromIpfs(map: Map<number, string>) {
+      map.forEach((uri: string, id: number) => {
+        fetch(uri)
+          .then(response => response.json())
+          .then(data => {
+            const nft = new Nft();
+            nft.name = data.name;
+            nft.description = data.description;
+            nft.image = data.image;
+            setIdMap(idMap.set(id, nft));
+            console.log(idMap);
+          });
       });
-      setNfts(nftslist);
-      console.log(Nfts);
-    }
-
-    
-    function MapNfts(nfts: Nft[]) {
-      return nfts.map((nft) => {
-        return (
-          <Card onClick={
-            (e) => {
-              e.preventDefault();
-              const id = '1';
-              clickOnItem(id);
-            }
-          } className="cursor-pointer">
-            <img
-              alt="Artwork"
-              className=" object-cover rounded-t-lg"
-              height={200}
-              src={nft.image}
-              width={300}
-            />
-            <CardContent className="pb-4">
-              <CardTitle className="text-base font-semibold">{nft.name} </CardTitle>
-              <CardDescription className="text-sm">{nft.description}</CardDescription>
-              <div className="flex items-center gap-2">
-                <div className="font-semibold">CFX</div>
-              </div>
-            </CardContent>
-          </Card>
-        );
-      });
-
+      return Nfts;
     }
 
 
@@ -123,17 +90,16 @@ export function ProfileItems() {
         <Header />
         {!isLoading ? (
            <main className="flex-1 grid gap-8 ml-10 md:gap-12 md:p-6">
-           <section className="grid gap-4">
-             <div className="grid gap-4">
-               <div className="grid items-center gap-2">
-                 <h1 className="font-semibold text-4xl">My Nfts</h1>
-               </div>
-               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {MapNfts(Nfts)}
- 
-               </div>
-             </div>
-           </section>
+          <section className="grid gap-4">
+            <div className="grid gap-4">
+              <div className="grid items-center gap-2">
+                <h1 className="font-semibold text-4xl">My Nfts</h1>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              
+              </div>
+            </div>
+          </section>
            <section className="grid gap-4">
              <div className="grid gap-4">
                <div className="grid items-center gap-2">
