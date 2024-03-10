@@ -61,7 +61,7 @@ export function ItemView() {
           image: data.image,
           Owner: owner,
           tokenID: urlkey.toString(),
-          Creator: data.creator
+          Creator: data.company
         });
       });
       setIsLoading(false);
