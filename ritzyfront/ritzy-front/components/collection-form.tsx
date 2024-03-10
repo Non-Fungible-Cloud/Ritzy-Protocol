@@ -95,7 +95,7 @@ export default function CollectionForm() {
             name: nft.name,
             description: nft.description,
             image: nft.image,
-            Creator: nft.Creator,
+            company: nft.Creator,
             Owner: nft.Owner
         });
 
