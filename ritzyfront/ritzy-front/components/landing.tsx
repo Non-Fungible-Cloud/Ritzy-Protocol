@@ -12,7 +12,7 @@ export function Landing() {
     <div className="flex flex-col min-h-[100dvh] transition-all">
       <header className="px-4 lg:px-6 h-14 flex items-center bg-zinc-900 ">
         <Link className="flex items-center justify-center" href="#">
-          <MountainIcon className="h-6 w-6" />
+          <img className="h-8 w-8" src="images/logo.png" />
           <span className="sr-only">Ritzy Protocol</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 ">
